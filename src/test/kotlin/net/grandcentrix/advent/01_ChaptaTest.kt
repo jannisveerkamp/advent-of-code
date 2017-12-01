@@ -32,6 +32,26 @@ class CaptchaTest {
             "6719682884157452772141585743166647191938727971366274357874252166721759"
 
     @Test
+    fun `sum of 1122 is 3`() {
+        assertThat(calculateCaptchaSum("1122")).isEqualTo(3)
+    }
+
+    @Test
+    fun `sum of 1111 is 4`() {
+        assertThat(calculateCaptchaSum("1111")).isEqualTo(4)
+    }
+
+    @Test
+    fun `sum of 1234 is 0`() {
+        assertThat(calculateCaptchaSum("1234")).isEqualTo(0)
+    }
+
+    @Test
+    fun `sum of 91212129 is 9`() {
+        assertThat(calculateCaptchaSum("91212129")).isEqualTo(9)
+    }
+
+    @Test
     fun `sum of input is 1341`() {
         assertThat(calculateCaptchaSum(testInput)).isEqualTo(1341)
     }
