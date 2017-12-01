@@ -10,5 +10,9 @@ fun calculateCaptchaSum(input: String): Int {
 }
 
 fun calculateAdvancedCaptchaSum(input: String): Int {
-    return -1
+    val step = input.length / 2
+
+    return (0..(input.length - 1))
+        .filter { input[it] == input[(it + step) % input.length] }
+        .sumBy { input[it].toString().toInt() }
 }
