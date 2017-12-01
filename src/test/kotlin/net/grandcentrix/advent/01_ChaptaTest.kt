@@ -31,8 +31,6 @@ class CaptchaTest {
             "739371762659157832117483222243412881787176534727815279942556563352115264368622141112946342549642538551" +
             "6719682884157452772141585743166647191938727971366274357874252166721759"
 
-    private val testAdvancedInput = ""
-
     @Test
     fun `sum of 1122 is 3`() {
         assertThat(calculateCaptchaSum("1122")).isEqualTo(3)
@@ -83,8 +81,8 @@ class CaptchaTest {
         assertThat(calculateAdvancedCaptchaSum("12131415")).isEqualTo(4)
     }
 
-    //@Test
-    fun `advanced sum of advancedInput is 4`() {
-        assertThat(calculateAdvancedCaptchaSum(testAdvancedInput)).isEqualTo(0)
+    @Test
+    fun `advanced sum of input is 1348`() {
+        assertThat(calculateAdvancedCaptchaSum(testInput)).isEqualTo(1348)
     }
 }
