@@ -8,3 +8,7 @@ fun calculateCaptchaSum(input: String): Int {
             .map { it.toString().toInt() }
             .sum()
 }
+
+fun calculateAdvancedCaptchaSum(input: String): Int {
+    return -1
+}
