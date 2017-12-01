@@ -1,8 +1,6 @@
 package net.grandcentrix.advent
 
-fun calculateAdvancedCaptchaSum(input: String): Int {
-    return calculateCaptchaSum(input, input.length / 2)
-}
+fun calculateAdvancedCaptchaSum(input: String): Int = calculateCaptchaSum(input, input.length / 2)
 
 fun calculateCaptchaSum(input: String, step: Int = 1): Int {
     return (0..(input.length - 1))
