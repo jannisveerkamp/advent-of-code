@@ -130,4 +130,110 @@ class ChecksumTest {
         Assertions.assertThat(checksum(row01, row02, row03, row04, row05, row06, row07, row08, row09, row10, row11,
                 row12, row13, row14, row15, row16)).isEqualTo(34925)
     }
+
+    @Test
+    fun `evenly division of 5928 is 4`() {
+        Assertions.assertThat(evenlyDivision(listOf(5, 9, 2, 8))).isEqualTo(4)
+    }
+
+    @Test
+    fun `evenly division of 9473 is 3`() {
+        Assertions.assertThat(largestDifference(listOf(9, 4, 7, 3))).isEqualTo(3)
+    }
+
+    @Test
+    fun `evenly division of 3865 is 2`() {
+        Assertions.assertThat(largestDifference(listOf(3, 8, 6, 5))).isEqualTo(2)
+    }
+
+    @Test
+    fun `evenly division checksum of simple table is 9`() {
+        Assertions.assertThat(advancedChecksum(listOf(5, 9, 2, 8), listOf(9, 4, 7, 3), listOf(3, 8, 6, 5))).isEqualTo(9)
+    }
+
+    @Test
+    fun `evenly division of row01 is 1727`() {
+        Assertions.assertThat(largestDifference(row01)).isEqualTo(0)
+    }
+
+    @Test
+    fun `evenly division of row02 is 540`() {
+        Assertions.assertThat(largestDifference(row02)).isEqualTo(540)
+    }
+
+    @Test
+    fun `evenly division of row03 is 1014`() {
+        Assertions.assertThat(largestDifference(row03)).isEqualTo(1014)
+    }
+
+    @Test
+    fun `evenly division of row04 is 1494`() {
+        Assertions.assertThat(largestDifference(row04)).isEqualTo(1494)
+    }
+
+    @Test
+    fun `evenly division of row05 is 690`() {
+        Assertions.assertThat(largestDifference(row05)).isEqualTo(690)
+    }
+
+    @Test
+    fun `evenly division of row06 is 1833`() {
+        Assertions.assertThat(largestDifference(row06)).isEqualTo(1833)
+    }
+
+    @Test
+    fun `evenly division of row07 is 1888`() {
+        Assertions.assertThat(largestDifference(row07)).isEqualTo(1888)
+    }
+
+    @Test
+    fun `evenly division of row08 is 853`() {
+        Assertions.assertThat(largestDifference(row08)).isEqualTo(853)
+    }
+
+    @Test
+    fun `evenly division of row09 is 7608`() {
+        Assertions.assertThat(largestDifference(row09)).isEqualTo(7608)
+    }
+
+    @Test
+    fun `evenly division of row10 is 2031`() {
+        Assertions.assertThat(largestDifference(row10)).isEqualTo(2031)
+    }
+
+    @Test
+    fun `evenly division of row11 is 2799`() {
+        Assertions.assertThat(largestDifference(row11)).isEqualTo(2799)
+    }
+
+    @Test
+    fun `evenly division of row12 is 2226`() {
+        Assertions.assertThat(largestDifference(row12)).isEqualTo(2226)
+    }
+
+    @Test
+    fun `evenly division of row13 is 343`() {
+        Assertions.assertThat(largestDifference(row13)).isEqualTo(343)
+    }
+
+    @Test
+    fun `evenly division of row14 is 5238`() {
+        Assertions.assertThat(largestDifference(row14)).isEqualTo(5238)
+    }
+
+    @Test
+    fun `evenly division of row15 is 4322`() {
+        Assertions.assertThat(largestDifference(row15)).isEqualTo(4322)
+    }
+
+    @Test
+    fun `evenly division of row16 is 319`() {
+        Assertions.assertThat(largestDifference(row16)).isEqualTo(319)
+    }
+
+    @Test
+    fun `advanced checksum of test rows is 34925`() {
+        Assertions.assertThat(advancedChecksum(row01, row02, row03, row04, row05, row06, row07, row08, row09, row10, row11,
+                row12, row13, row14, row15, row16)).isEqualTo(34925)
+    }
 }
