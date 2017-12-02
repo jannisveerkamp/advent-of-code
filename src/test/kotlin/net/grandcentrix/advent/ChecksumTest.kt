@@ -32,7 +32,7 @@ class ChecksumTest {
 
     @Test
     fun `largest difference of 753 is 4`() {
-        Assertions.assertThat(largestDifference(listOf(7, 5, 3))).isEqualTo(8)
+        Assertions.assertThat(largestDifference(listOf(7, 5, 3))).isEqualTo(4)
     }
 
     @Test
@@ -41,93 +41,93 @@ class ChecksumTest {
     }
 
     @Test
-    fun `checksum of simple table is 8`() {
-        Assertions.assertThat(checksum(listOf(2, 4, 6, 8), listOf(7, 5, 3), listOf(2, 4, 6, 8))).isEqualTo(18)
+    fun `checksum of simple table is 18`() {
+        Assertions.assertThat(checksum(listOf(2, 4, 6, 8), listOf(7, 5, 3), listOf(5, 1, 9, 5))).isEqualTo(18)
     }
 
     @Test
-    fun `largest difference of row01 is 0`() {
-        Assertions.assertThat(largestDifference(row01)).isEqualTo(0)
+    fun `largest difference of row01 is 1727`() {
+        Assertions.assertThat(largestDifference(row01)).isEqualTo(1727)
     }
 
     @Test
-    fun `largest difference of row02 is 0`() {
-        Assertions.assertThat(largestDifference(row02)).isEqualTo(0)
+    fun `largest difference of row02 is 540`() {
+        Assertions.assertThat(largestDifference(row02)).isEqualTo(540)
     }
 
     @Test
-    fun `largest difference of row03 is 0`() {
-        Assertions.assertThat(largestDifference(row03)).isEqualTo(0)
+    fun `largest difference of row03 is 1014`() {
+        Assertions.assertThat(largestDifference(row03)).isEqualTo(1014)
     }
 
     @Test
-    fun `largest difference of row04 is 0`() {
-        Assertions.assertThat(largestDifference(row04)).isEqualTo(0)
+    fun `largest difference of row04 is 1494`() {
+        Assertions.assertThat(largestDifference(row04)).isEqualTo(1494)
     }
 
     @Test
-    fun `largest difference of row05 is 0`() {
-        Assertions.assertThat(largestDifference(row05)).isEqualTo(0)
+    fun `largest difference of row05 is 690`() {
+        Assertions.assertThat(largestDifference(row05)).isEqualTo(690)
     }
 
     @Test
-    fun `largest difference of row06 is 0`() {
-        Assertions.assertThat(largestDifference(row06)).isEqualTo(0)
+    fun `largest difference of row06 is 1833`() {
+        Assertions.assertThat(largestDifference(row06)).isEqualTo(1833)
     }
 
     @Test
-    fun `largest difference of row07 is 0`() {
-        Assertions.assertThat(largestDifference(row07)).isEqualTo(0)
+    fun `largest difference of row07 is 1888`() {
+        Assertions.assertThat(largestDifference(row07)).isEqualTo(1888)
     }
 
     @Test
-    fun `largest difference of row08 is 0`() {
-        Assertions.assertThat(largestDifference(row08)).isEqualTo(0)
+    fun `largest difference of row08 is 853`() {
+        Assertions.assertThat(largestDifference(row08)).isEqualTo(853)
     }
 
     @Test
-    fun `largest difference of row09 is 0`() {
-        Assertions.assertThat(largestDifference(row09)).isEqualTo(0)
+    fun `largest difference of row09 is 7608`() {
+        Assertions.assertThat(largestDifference(row09)).isEqualTo(7608)
     }
 
     @Test
-    fun `largest difference of row10 is 0`() {
-        Assertions.assertThat(largestDifference(row10)).isEqualTo(0)
+    fun `largest difference of row10 is 2031`() {
+        Assertions.assertThat(largestDifference(row10)).isEqualTo(2031)
     }
 
     @Test
-    fun `largest difference of row11 is 0`() {
-        Assertions.assertThat(largestDifference(row11)).isEqualTo(0)
+    fun `largest difference of row11 is 2799`() {
+        Assertions.assertThat(largestDifference(row11)).isEqualTo(2799)
     }
 
     @Test
-    fun `largest difference of row12 is 0`() {
-        Assertions.assertThat(largestDifference(row12)).isEqualTo(0)
+    fun `largest difference of row12 is 2226`() {
+        Assertions.assertThat(largestDifference(row12)).isEqualTo(2226)
     }
 
     @Test
-    fun `largest difference of row13 is 0`() {
-        Assertions.assertThat(largestDifference(row13)).isEqualTo(0)
+    fun `largest difference of row13 is 343`() {
+        Assertions.assertThat(largestDifference(row13)).isEqualTo(343)
     }
 
     @Test
-    fun `largest difference of row14 is 0`() {
-        Assertions.assertThat(largestDifference(row14)).isEqualTo(0)
+    fun `largest difference of row14 is 5238`() {
+        Assertions.assertThat(largestDifference(row14)).isEqualTo(5238)
     }
 
     @Test
-    fun `largest difference of row15 is 0`() {
-        Assertions.assertThat(largestDifference(row15)).isEqualTo(0)
+    fun `largest difference of row15 is 4322`() {
+        Assertions.assertThat(largestDifference(row15)).isEqualTo(4322)
     }
 
     @Test
-    fun `largest difference of row16 is 0`() {
-        Assertions.assertThat(largestDifference(row16)).isEqualTo(0)
+    fun `largest difference of row16 is 319`() {
+        Assertions.assertThat(largestDifference(row16)).isEqualTo(319)
     }
 
     @Test
-    fun `checksum of test rows is 999`() {
+    fun `checksum of test rows is 34925`() {
         Assertions.assertThat(checksum(row01, row02, row03, row04, row05, row06, row07, row08, row09, row10, row11,
-                row12, row13, row14, row15, row16)).isEqualTo(999)
+                row12, row13, row14, row15, row16)).isEqualTo(34925)
     }
 }
