@@ -7,12 +7,8 @@ fun checksum(vararg rows: List<Int>): Int = rows.map { largestDifference(it) }.s
 fun evenlyDivision(row: List<Int>): Int {
     row.forEach { outer ->
         row.forEach { inner ->
-            if (outer != inner) {
-                if (outer % inner == 0) {
-                    return outer / inner
-                } else if (inner % outer == 0) {
-                    return inner / outer
-                }
+            if (outer != inner && outer % inner == 0) {
+                return outer / inner
             }
         }
     }
