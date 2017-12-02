@@ -152,88 +152,88 @@ class ChecksumTest {
     }
 
     @Test
-    fun `evenly division of row01 is 1727`() {
-        Assertions.assertThat(evenlyDivision(row01)).isEqualTo(0)
+    fun `evenly division of row01 is 8`() {
+        Assertions.assertThat(evenlyDivision(row01)).isEqualTo(8)
     }
 
     @Test
-    fun `evenly division of row02 is 540`() {
-        Assertions.assertThat(evenlyDivision(row02)).isEqualTo(540)
+    fun `evenly division of row02 is 4`() {
+        Assertions.assertThat(evenlyDivision(row02)).isEqualTo(4)
     }
 
     @Test
-    fun `evenly division of row03 is 1014`() {
-        Assertions.assertThat(evenlyDivision(row03)).isEqualTo(1014)
+    fun `evenly division of row03 is 6`() {
+        Assertions.assertThat(evenlyDivision(row03)).isEqualTo(6)
     }
 
     @Test
-    fun `evenly division of row04 is 1494`() {
-        Assertions.assertThat(evenlyDivision(row04)).isEqualTo(1494)
+    fun `evenly division of row04 is 27`() {
+        Assertions.assertThat(evenlyDivision(row04)).isEqualTo(27)
     }
 
     @Test
-    fun `evenly division of row05 is 690`() {
-        Assertions.assertThat(evenlyDivision(row05)).isEqualTo(690)
+    fun `evenly division of row05 is 5`() {
+        Assertions.assertThat(evenlyDivision(row05)).isEqualTo(5)
     }
 
     @Test
-    fun `evenly division of row06 is 1833`() {
-        Assertions.assertThat(evenlyDivision(row06)).isEqualTo(1833)
+    fun `evenly division of row06 is 19`() {
+        Assertions.assertThat(evenlyDivision(row06)).isEqualTo(19)
     }
 
     @Test
-    fun `evenly division of row07 is 1888`() {
-        Assertions.assertThat(evenlyDivision(row07)).isEqualTo(1888)
+    fun `evenly division of row07 is 17`() {
+        Assertions.assertThat(evenlyDivision(row07)).isEqualTo(17)
     }
 
     @Test
-    fun `evenly division of row08 is 853`() {
-        Assertions.assertThat(evenlyDivision(row08)).isEqualTo(853)
+    fun `evenly division of row08 is 11`() {
+        Assertions.assertThat(evenlyDivision(row08)).isEqualTo(11)
     }
 
     @Test
-    fun `evenly division of row09 is 7608`() {
-        Assertions.assertThat(evenlyDivision(row09)).isEqualTo(7608)
+    fun `evenly division of row09 is 29`() {
+        Assertions.assertThat(evenlyDivision(row09)).isEqualTo(29)
     }
 
     @Test
-    fun `evenly division of row10 is 2031`() {
-        Assertions.assertThat(evenlyDivision(row10)).isEqualTo(2031)
+    fun `evenly division of row10 is 13`() {
+        Assertions.assertThat(evenlyDivision(row10)).isEqualTo(13)
     }
 
     @Test
-    fun `evenly division of row11 is 2799`() {
-        Assertions.assertThat(evenlyDivision(row11)).isEqualTo(2799)
+    fun `evenly division of row11 is 20`() {
+        Assertions.assertThat(evenlyDivision(row11)).isEqualTo(20)
     }
 
     @Test
-    fun `evenly division of row12 is 2226`() {
-        Assertions.assertThat(evenlyDivision(row12)).isEqualTo(2226)
+    fun `evenly division of row12 is 10`() {
+        Assertions.assertThat(evenlyDivision(row12)).isEqualTo(10)
     }
 
     @Test
-    fun `evenly division of row13 is 343`() {
-        Assertions.assertThat(evenlyDivision(row13)).isEqualTo(343)
+    fun `evenly division of row13 is 2`() {
+        Assertions.assertThat(evenlyDivision(row13)).isEqualTo(2)
     }
 
     @Test
-    fun `evenly division of row14 is 5238`() {
-        Assertions.assertThat(evenlyDivision(row14)).isEqualTo(5238)
+    fun `evenly division of row14 is 27`() {
+        Assertions.assertThat(evenlyDivision(row14)).isEqualTo(27)
     }
 
     @Test
-    fun `evenly division of row15 is 4322`() {
-        Assertions.assertThat(evenlyDivision(row15)).isEqualTo(4322)
+    fun `evenly division of row15 is 17`() {
+        Assertions.assertThat(evenlyDivision(row15)).isEqualTo(17)
     }
 
     @Test
-    fun `evenly division of row16 is 319`() {
-        Assertions.assertThat(evenlyDivision(row16)).isEqualTo(319)
+    fun `evenly division of row16 is 6`() {
+        Assertions.assertThat(evenlyDivision(row16)).isEqualTo(6)
     }
 
     @Test
-    fun `advanced checksum of test rows is 34925`() {
+    fun `advanced checksum of test rows is 221`() {
         Assertions.assertThat(advancedChecksum(row01, row02, row03, row04, row05, row06, row07, row08, row09, row10, row11,
-                row12, row13, row14, row15, row16)).isEqualTo(34925)
+                row12, row13, row14, row15, row16)).isEqualTo(221)
     }
 }
