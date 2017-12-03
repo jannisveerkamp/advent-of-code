@@ -49,7 +49,7 @@ class SpiralMemoryTest {
     }
 
     @Test
-    fun `Manhattan Distance of 325489 is 0`() {
-        assertThat(manhattanDistance(325489)).isEqualTo(0)
+    fun `Manhattan Distance of 325489 is 552`() {
+        assertThat(manhattanDistance(325489)).isEqualTo(552)
     }
 }
