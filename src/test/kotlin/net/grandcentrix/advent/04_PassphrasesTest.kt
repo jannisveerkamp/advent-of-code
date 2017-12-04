@@ -538,6 +538,6 @@ class PassPhrasesTest{
 
     @Test
     fun `test input has 0 valid rows`() {
-        Assertions.assertThat(testInput.count { isPassphraseValid(it) }).isEqualTo(0)
+        Assertions.assertThat(testInput.count { isPassphraseValid(it) }).isEqualTo(383)
     }
 }

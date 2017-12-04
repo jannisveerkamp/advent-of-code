@@ -1,5 +1,6 @@
 package net.grandcentrix.advent
 
 fun isPassphraseValid(passphrase: String): Boolean {
-    return false
+    val split= passphrase.split(" ")
+    return split.size == split.distinct().size
 }
