@@ -570,5 +570,4 @@ class PassPhrasesTest{
     fun `"test input has 265 rows with anagrams`() {
         Assertions.assertThat(testInput.count { containsNoAnagram(it) }).isEqualTo(265)
     }
-
 }
