@@ -543,32 +543,32 @@ class PassPhrasesTest{
 
     @Test
     fun `"abcde fghij" contains no anagrams`() {
-        Assertions.assertThat(isPassPhraseValidAnagram("abcde fghij")).isEqualTo(true)
+        Assertions.assertThat(containsNoAnagram("abcde fghij")).isEqualTo(true)
     }
 
     @Test
     fun `"abcde xyz ecdab" contains anagrams`() {
-        Assertions.assertThat(isPassPhraseValidAnagram("abcde xyz ecdab")).isEqualTo(false)
+        Assertions.assertThat(containsNoAnagram("abcde xyz ecdab")).isEqualTo(false)
     }
 
     @Test
     fun `"a ab abc abd abf abj" contains no anagrams`() {
-        Assertions.assertThat(isPassPhraseValidAnagram("a ab abc abd abf abj")).isEqualTo(true)
+        Assertions.assertThat(containsNoAnagram("a ab abc abd abf abj")).isEqualTo(true)
     }
 
     @Test
     fun `"iiii oiii ooii oooi oooo" is contains no anagrams`() {
-        Assertions.assertThat(isPassPhraseValidAnagram("iiii oiii ooii oooi oooo")).isEqualTo(true)
+        Assertions.assertThat(containsNoAnagram("iiii oiii ooii oooi oooo")).isEqualTo(true)
     }
 
     @Test
     fun `"oiii ioii iioi iiio" is contains no anagrams`() {
-        Assertions.assertThat(isPassPhraseValidAnagram("oiii ioii iioi iiio")).isEqualTo(false)
+        Assertions.assertThat(containsNoAnagram("oiii ioii iioi iiio")).isEqualTo(false)
     }
 
     @Test
-    fun `"test input has 0 rows with anagrams`() {
-        Assertions.assertThat(testInput.count { isPassPhraseValidAnagram(it) }).isEqualTo(0)
+    fun `"test input has 265 rows with anagrams`() {
+        Assertions.assertThat(testInput.count { containsNoAnagram(it) }).isEqualTo(265)
     }
 
 }
