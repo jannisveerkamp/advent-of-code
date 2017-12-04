@@ -52,4 +52,59 @@ class SpiralMemoryTest {
     fun `Manhattan Distance of 325489 is 552`() {
         assertThat(manhattanDistance(325489)).isEqualTo(552)
     }
+
+    @Test
+    fun `Value for position of 1 is 1`() {
+        assertThat(valueForPosition(1)).isEqualTo(1)
+    }
+
+    @Test
+    fun `Value for position of 2 is 1`() {
+        assertThat(valueForPosition(2)).isEqualTo(1)
+    }
+
+    @Test
+    fun `Value for position of 3 is 1`() {
+        assertThat(valueForPosition(3)).isEqualTo(2)
+    }
+
+    @Test
+    fun `Value for position of 4 is 4`() {
+        assertThat(valueForPosition(4)).isEqualTo(4)
+    }
+
+    @Test
+    fun `Value for position of 5 is 5`() {
+        assertThat(valueForPosition(5)).isEqualTo(5)
+    }
+
+    @Test
+    fun `Value for position of 6 is 10`() {
+        assertThat(valueForPosition(6)).isEqualTo(10)
+    }
+
+    @Test
+    fun `Value for position of 10 is 26`() {
+        assertThat(valueForPosition(10)).isEqualTo(26)
+    }
+
+    @Test
+    fun `Value for position of 12 is 57`() {
+        assertThat(valueForPosition(12)).isEqualTo(57)
+    }
+
+    @Test
+    fun `Value for position of 22 is 747`() {
+        assertThat(valueForPosition(22)).isEqualTo(747)
+    }
+
+    @Test
+    fun `Value for position of 23 is 806`() {
+        assertThat(valueForPosition(23)).isEqualTo(806)
+    }
+
+    @Test
+    fun `Value for position of 325489 is 0`() {
+        assertThat(firstNumberLargerThan(325489)).isEqualTo(330785)
+    }
 }
