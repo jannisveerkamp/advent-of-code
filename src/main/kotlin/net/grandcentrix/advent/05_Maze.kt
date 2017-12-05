@@ -13,7 +13,7 @@ private fun stepsToEscapeMaze(maze: MutableList<Int>, stepChange: (Int) -> Int):
     var steps = 0
     while (position < maze.size) {
         val instruction = maze[position]
-        maze[position] = stepChange(maze[position])
+        maze[position] = stepChange(instruction)
         position += instruction
         steps++
     }
