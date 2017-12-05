@@ -1,5 +1,5 @@
 package net.grandcentrix.advent
 
-fun stepsToEscapeMaze(maze: List<Int>): Int {
+fun stepsToEscapeMaze(maze: MutableList<Int>): Int {
     return -1
 }
