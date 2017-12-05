@@ -82,7 +82,7 @@ class MazeTest {
     }
 
     @Test
-    fun `testInput needs 0 steps to escape the advanced maze`() {
-        Assertions.assertThat(stepsToEscapeAdvancedMaze(testInput)).isEqualTo(0)
+    fun `testInput needs 27283023 steps to escape the advanced maze`() {
+        Assertions.assertThat(stepsToEscapeAdvancedMaze(testInput)).isEqualTo(27283023)
     }
 }
