@@ -11,3 +11,7 @@ fun stepsToEscapeMaze(maze: MutableList<Int>): Int {
     }
     return steps
 }
+
+fun stepsToEscapeAdvancedMaze(maze: MutableList<Int>): Int {
+    return -1
+}
