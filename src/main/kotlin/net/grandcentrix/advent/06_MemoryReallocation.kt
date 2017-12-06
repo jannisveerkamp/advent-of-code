@@ -1,20 +1,22 @@
 package net.grandcentrix.advent
 
 fun reallocateBlockStepsTillStable(block: MutableList<Int>): Int {
-    val seenBlocks = mutableListOf<List<Int>>()
-    var steps = 0
-
-    while (!seenBlocks.contains(block)) {
-        //println(block)
-        seenBlocks.add(block.toList())
-        rearrangeBlock(block)
-        steps++
-    }
-
-    return steps
+    return reallocateBlock(block) { _, steps -> steps }
 }
 
 fun reallocateBlockCycleSteps(block: MutableList<Int>): Int {
+    return reallocateBlock(block) { seenBlocks, steps ->
+        var stepsSince = 0
+        seenBlocks.forEach { stepSeen, value ->
+            if (value == block) {
+                stepsSince = steps - stepSeen
+            }
+        }
+        stepsSince
+    }
+}
+
+fun reallocateBlock(block: MutableList<Int>, stepsSince: (Map<Int, List<Int>>, Int) -> Int): Int {
     val seenBlocks = mutableMapOf<Int, List<Int>>()
     var steps = 0
 
@@ -24,14 +26,7 @@ fun reallocateBlockCycleSteps(block: MutableList<Int>): Int {
         rearrangeBlock(block)
         steps++
     }
-
-    var test = 0
-    seenBlocks.forEach { key, value ->
-        if (value == block) {
-            test = steps - key
-        }
-    }
-    return test
+    return stepsSince(seenBlocks, steps)
 }
 
 fun rearrangeBlock(block: MutableList<Int>) {
