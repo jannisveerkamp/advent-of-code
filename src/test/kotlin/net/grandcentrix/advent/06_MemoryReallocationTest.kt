@@ -16,7 +16,7 @@ class MemoryReallocationTest {
     }
 
     @Test
-    fun `test input needs 0 steps to get a configuration it has seen before`() {
-        assertThat(reallocateBlock(testInput)).isEqualTo(0)
+    fun `test input needs 6681 steps to get a configuration it has seen before`() {
+        assertThat(reallocateBlock(testInput)).isEqualTo(6681)
     }
 }
