@@ -15,10 +15,8 @@ fun reallocateBlock(block: MutableList<Int>, stepsSince: (Map<Int, List<Int>>, I
     var steps = 0
 
     while (!seenBlocks.containsValue(block)) {
-        //println(block)
-        seenBlocks.put(steps, block.toList())
+        seenBlocks.put(steps++, block.toList())
         rearrangeBlock(block)
-        steps++
     }
     return stepsSince(seenBlocks, steps)
 }
@@ -26,13 +24,11 @@ fun reallocateBlock(block: MutableList<Int>, stepsSince: (Map<Int, List<Int>>, I
 fun rearrangeBlock(block: MutableList<Int>) {
     var maxValue = block.max()!!
     var maxIndex = block.indexOf(maxValue)
-
     block[maxIndex] = 0
+
     while (maxValue > 0) {
+        maxValue--
         maxIndex++
         block[maxIndex % block.size]++
-        maxValue--
     }
 }
-
-
