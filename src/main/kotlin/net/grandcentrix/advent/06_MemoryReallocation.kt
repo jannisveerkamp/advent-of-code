@@ -6,13 +6,7 @@ fun reallocateBlockStepsTillStable(block: MutableList<Int>): Int {
 
 fun reallocateBlockCycleSteps(block: MutableList<Int>): Int {
     return reallocateBlock(block) { seenBlocks, steps ->
-        var stepsSince = 0
-        seenBlocks.forEach { stepSeen, value ->
-            if (value == block) {
-                stepsSince = steps - stepSeen
-            }
-        }
-        stepsSince
+        steps - seenBlocks.filterValues { it == block }.keys.first()
     }
 }
 
