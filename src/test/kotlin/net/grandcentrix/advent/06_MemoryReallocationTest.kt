@@ -12,11 +12,21 @@ class MemoryReallocationTest {
 
     @Test
     fun `(0, 2, 7, 0) needs 5 steps to get a configuration it has seen before`() {
-        assertThat(reallocateBlock(mutableListOf(0, 2, 7, 0))).isEqualTo(5)
+        assertThat(reallocateBlockStepsTillStable(mutableListOf(0, 2, 7, 0))).isEqualTo(5)
     }
 
     @Test
     fun `test input needs 6681 steps to get a configuration it has seen before`() {
-        assertThat(reallocateBlock(testInput)).isEqualTo(6681)
+        assertThat(reallocateBlockStepsTillStable(testInput)).isEqualTo(6681)
+    }
+
+    @Test
+    fun `(0, 2, 7, 0) needs 4 steps to get a configuration it has seen before from the step it has seen it`() {
+        assertThat(reallocateBlockCycleSteps(mutableListOf(0, 2, 7, 0))).isEqualTo(4)
+    }
+
+    @Test
+    fun `test input needs 0 steps to get a configuration it has seen before from the step it has seen it`() {
+        assertThat(reallocateBlockCycleSteps(testInput)).isEqualTo(0)
     }
 }
