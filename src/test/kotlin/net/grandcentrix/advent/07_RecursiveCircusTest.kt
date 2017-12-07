@@ -39,7 +39,7 @@ class RecursiveCircusTest {
     }
 
     @Test
-    fun `testInput has the root Element ""`() {
-        assertThat(rootElement(testInput)).isEqualTo("")
+    fun `testInput has the root Element "rqwgj"`() {
+        assertThat(rootElement(testInput)).isEqualTo("rqwgj")
     }
 }

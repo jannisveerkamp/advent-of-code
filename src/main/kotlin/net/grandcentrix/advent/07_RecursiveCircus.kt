@@ -29,5 +29,23 @@ fun parseCircusInput(filename: String): Map<CircusProgram, List<String>> {
 }
 
 fun rootElement(input: Map<CircusProgram, List<String>>): String {
-    return "-"
+    var root = ""
+
+    input.forEach { circusProgram, children ->
+        val parent = findParent(input, circusProgram.name)
+        if (parent == null) {
+            root = circusProgram.name
+        }
+    }
+    return root
+}
+
+fun findParent(input: Map<CircusProgram, List<String>>, name: String): CircusProgram? {
+    var parent: CircusProgram? = null
+    input.forEach({ program, children ->
+        if (children.contains(name)) {
+            parent = program
+        }
+    })
+    return parent
 }
