@@ -85,3 +85,7 @@ fun findParent(input: List<CircusProgram>, name: String): CircusProgram? {
     })
     return parent
 }
+
+fun valueToBalance(tree: Node): Int {
+    return -1
+}

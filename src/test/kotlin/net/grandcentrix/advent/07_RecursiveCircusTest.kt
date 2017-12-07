@@ -42,4 +42,13 @@ class RecursiveCircusTest {
     fun `simpleTestInput has the root Element "tknk"`() {
         assertThat(buildTree(simpleTestInput).value.name).isEqualTo("tknk")
     }
+
+    @Test
+    fun `value to balance tower for testInput is 0"`() {
+        assertThat(valueToBalance(buildTree(testInput))).isEqualTo(0)
+    }
+    @Test
+    fun `value to balance tower for simpleTestInput is 0"`() {
+        assertThat(valueToBalance(buildTree(simpleTestInput))).isEqualTo(0)
+    }
 }
