@@ -86,7 +86,7 @@ fun findParent(input: List<CircusProgram>, name: String): CircusProgram? {
     return parent
 }
 
-class NodeException (val number: Int): Exception("")
+class NodeException(val number: Int) : Exception("")
 
 fun valueToBalance(node: Node): Int {
     try {
