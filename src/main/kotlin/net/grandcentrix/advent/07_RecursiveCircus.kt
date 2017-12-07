@@ -8,6 +8,23 @@ fun parseCircusInput(filename: String): Map<CircusProgram, List<String>> {
     val lines = linesFromResource(filename)
     val map = mutableMapOf<CircusProgram, List<String>>()
 
+    lines.forEach { line ->
+        val space = line.indexOf(" ")
+        val weightStart = line.indexOf("(") + 1
+        val weightEnd = line.indexOf(")")
+        val listStart = line.indexOf("->")
+
+        val name = line.substring(0, space)
+        val weight = line.substring(weightStart, weightEnd).toInt()
+
+        val list = if (listStart != -1) {
+            line.substring(listStart + 3, line.length).split(", ")
+        } else {
+            emptyList()
+        }
+        map.put(CircusProgram(name, weight), list)
+    }
+
     return map
 }
 
