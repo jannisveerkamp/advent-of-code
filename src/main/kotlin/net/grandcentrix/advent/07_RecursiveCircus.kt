@@ -29,15 +29,10 @@ fun parseCircusInput(filename: String): MutableList<CircusProgram> {
 class Node(var value: CircusProgram) {
     var parent: Node? = null
     var children: MutableList<Node> = mutableListOf()
-    var tempChildren: MutableList<String> = mutableListOf()
 
     fun addChild(node: Node) {
         children.add(node)
         node.parent = this
-    }
-
-    fun addTempChild(nodeName: String) {
-        tempChildren.add(nodeName)
     }
 
     override fun toString(): String {
@@ -57,9 +52,6 @@ fun buildTree(input: MutableList<CircusProgram>): Node {
         val parent = findParent(input, circusProgram.name)
         if (parent == null) {
             root = Node(circusProgram)
-            circusProgram.children.forEach {
-                root!!.addTempChild(it)
-            }
         }
     }
     input.remove(root!!.value)
@@ -71,13 +63,10 @@ fun buildTree(input: MutableList<CircusProgram>): Node {
 }
 
 fun buildTreeRecursive(root: Node, input: MutableList<CircusProgram>) {
-    root.tempChildren.forEach { tempName ->
+    root.value.children.forEach { childName ->
         input.forEach { circusProgram ->
-            if (tempName == circusProgram.name) {
+            if (childName == circusProgram.name) {
                 val node = Node(circusProgram)
-                circusProgram.children.forEach {
-                    node.addTempChild(it)
-                }
                 root.addChild(node)
             }
         }
