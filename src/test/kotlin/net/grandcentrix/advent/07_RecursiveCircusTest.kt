@@ -44,11 +44,12 @@ class RecursiveCircusTest {
     }
 
     @Test
-    fun `value to balance tower for testInput is 0"`() {
-        assertThat(valueToBalance(buildTree(testInput))).isEqualTo(0)
+    fun `value to balance tower for testInput is 333"`() {
+        assertThat(valueToBalance(buildTree(testInput))).isEqualTo(333)
     }
+
     @Test
-    fun `value to balance tower for simpleTestInput is 0"`() {
-        assertThat(valueToBalance(buildTree(simpleTestInput))).isEqualTo(0)
+    fun `value to balance tower for simpleTestInput is 60"`() {
+        assertThat(valueToBalance(buildTree(simpleTestInput))).isEqualTo(60)
     }
 }

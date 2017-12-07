@@ -86,6 +86,47 @@ fun findParent(input: List<CircusProgram>, name: String): CircusProgram? {
     return parent
 }
 
-fun valueToBalance(tree: Node): Int {
+class NodeException (val number: Int): Exception("")
+
+fun valueToBalance(node: Node): Int {
+    try {
+        valueForNode(node)
+    } catch (e: NodeException) {
+        return e.number
+    }
     return -1
+}
+
+@Throws(NodeException::class)
+fun valueForNode(node: Node): Int {
+    if (node.children.isEmpty()) {
+        return node.value.weight
+    } else {
+        val childValues = node.children.associateBy({ it }, { valueForNode(it) })
+        val uniqueValues = childValues.values.toSet()
+
+        if (uniqueValues.size > 1) {
+
+            val first = childValues.values.filter { it == uniqueValues.first() }
+            val second = childValues.values.filter { it == uniqueValues.last() }
+
+            val wrongNode: Node
+            val wrongWeight: Int
+            if (first.size > second.size) {
+                wrongNode = childValues.filter { entry ->
+                    entry.value == second.first()
+                }.keys.first()
+                wrongWeight = second.first() - first.first()
+            } else {
+                wrongNode = childValues.filter { entry ->
+                    entry.value == first.first()
+                }.keys.first()
+                wrongWeight = first.first() - second.first()
+            }
+
+            throw NodeException(wrongNode.value.weight - wrongWeight)
+        }
+
+        return node.value.weight + childValues.values.sum()
+    }
 }
