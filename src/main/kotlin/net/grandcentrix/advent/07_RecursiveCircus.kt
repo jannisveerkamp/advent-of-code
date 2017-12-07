@@ -106,25 +106,20 @@ fun valueForNode(node: Node): Int {
         val uniqueValues = childValues.values.toSet()
 
         if (uniqueValues.size > 1) {
-
             val first = childValues.values.filter { it == uniqueValues.first() }
             val second = childValues.values.filter { it == uniqueValues.last() }
 
             val wrongNode: Node
-            val wrongWeight: Int
+            val weightOffset: Int
             if (first.size > second.size) {
-                wrongNode = childValues.filter { entry ->
-                    entry.value == second.first()
-                }.keys.first()
-                wrongWeight = second.first() - first.first()
+                wrongNode = childValues.filter { entry -> entry.value == second.first() }.keys.first()
+                weightOffset = second.first() - first.first()
             } else {
-                wrongNode = childValues.filter { entry ->
-                    entry.value == first.first()
-                }.keys.first()
-                wrongWeight = first.first() - second.first()
+                wrongNode = childValues.filter { entry -> entry.value == first.first() }.keys.first()
+                weightOffset = first.first() - second.first()
             }
 
-            throw NodeException(wrongNode.value.weight - wrongWeight)
+            throw NodeException(wrongNode.value.weight - weightOffset)
         }
 
         return node.value.weight + childValues.values.sum()
