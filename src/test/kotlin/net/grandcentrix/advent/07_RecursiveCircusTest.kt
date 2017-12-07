@@ -8,20 +8,20 @@ import org.junit.runners.*
 @RunWith(JUnit4::class)
 class RecursiveCircusTest {
 
-    private val simpleTestInputValidation = mutableMapOf(
-            "pbga" to 66 children emptyList(),
-            "xhth" to 57 children emptyList(),
-            "ebii" to 61 children emptyList(),
-            "havc" to 66 children emptyList(),
-            "ktlj" to 57 children emptyList(),
-            "fwft" to 72 children listOf("ktlj", "cntj", "xhth"),
-            "qoyq" to 66 children emptyList(),
-            "padx" to 45 children listOf("pbga", "havc", "qoyq"),
-            "tknk" to 41 children listOf("ugml", "padx", "fwft"),
-            "jptl" to 61 children emptyList(),
-            "ugml" to 68 children listOf("gyxo", "ebii", "jptl"),
-            "gyxo" to 61 children emptyList(),
-            "cntj" to 57 children emptyList()
+    private val simpleTestInputValidation = mutableListOf(
+            CircusProgram("pbga", 66, emptyList()),
+            CircusProgram("xhth", 57,  emptyList()),
+            CircusProgram("ebii", 61,  emptyList()),
+            CircusProgram("havc", 66,  emptyList()),
+            CircusProgram("ktlj", 57,  emptyList()),
+            CircusProgram("fwft", 72,  listOf("ktlj", "cntj", "xhth")),
+            CircusProgram("qoyq", 66,  emptyList()),
+            CircusProgram("padx", 45,  listOf("pbga", "havc", "qoyq")),
+            CircusProgram("tknk", 41,  listOf("ugml", "padx", "fwft")),
+            CircusProgram("jptl", 61,  emptyList()),
+            CircusProgram("ugml", 68,  listOf("gyxo", "ebii", "jptl")),
+            CircusProgram("gyxo", 61,  emptyList()),
+            CircusProgram("cntj", 57,  emptyList())
     )
 
     private val simpleTestInput = parseCircusInput("07_recursive_circus_input_simple.txt")

@@ -1,12 +1,10 @@
 package net.grandcentrix.advent
 
-data class CircusProgram(val name: String, val weight: Int)
+data class CircusProgram(val name: String, val weight: Int, val children: List<String>)
 
-infix fun Pair<String, Int>.children(that: List<String>): Pair<CircusProgram, List<String>> = Pair(CircusProgram(first, second), that)
-
-fun parseCircusInput(filename: String): MutableMap<CircusProgram, List<String>> {
+fun parseCircusInput(filename: String): MutableList<CircusProgram> {
     val lines = linesFromResource(filename)
-    val map = mutableMapOf<CircusProgram, List<String>>()
+    val circusPrograms = mutableListOf<CircusProgram>()
 
     lines.forEach { line ->
         val space = line.indexOf(" ")
@@ -22,10 +20,10 @@ fun parseCircusInput(filename: String): MutableMap<CircusProgram, List<String>> 
         } else {
             emptyList()
         }
-        map.put(CircusProgram(name, weight), list)
+        circusPrograms.add(CircusProgram(name, weight, list))
     }
 
-    return map
+    return circusPrograms
 }
 
 class Node(var value: CircusProgram) {
@@ -51,32 +49,33 @@ class Node(var value: CircusProgram) {
     }
 }
 
-fun buildTree(input: MutableMap<CircusProgram, List<String>>): Node {
+fun buildTree(input: MutableList<CircusProgram>): Node {
     var root: Node? = null
 
     // Find the root node
-    input.forEach { circusProgram, children ->
+    input.forEach { circusProgram ->
         val parent = findParent(input, circusProgram.name)
         if (parent == null) {
             root = Node(circusProgram)
-            children.forEach {
+            circusProgram.children.forEach {
                 root!!.addTempChild(it)
             }
         }
     }
     input.remove(root!!.value)
 
+    // Build the whole tree
     buildTreeRecursive(root!!, input)
 
     return root!!
 }
 
-fun buildTreeRecursive(root: Node, input: MutableMap<CircusProgram, List<String>>) {
+fun buildTreeRecursive(root: Node, input: MutableList<CircusProgram>) {
     root.tempChildren.forEach { tempName ->
-        input.forEach { circusProgram, children ->
+        input.forEach { circusProgram ->
             if (tempName == circusProgram.name) {
                 val node = Node(circusProgram)
-                children.forEach {
+                circusProgram.children.forEach {
                     node.addTempChild(it)
                 }
                 root.addChild(node)
@@ -89,11 +88,11 @@ fun buildTreeRecursive(root: Node, input: MutableMap<CircusProgram, List<String>
     }
 }
 
-fun findParent(input: Map<CircusProgram, List<String>>, name: String): CircusProgram? {
+fun findParent(input: List<CircusProgram>, name: String): CircusProgram? {
     var parent: CircusProgram? = null
-    input.forEach({ program, children ->
-        if (children.contains(name)) {
-            parent = program
+    input.forEach({ circusProgram ->
+        if (circusProgram.children.contains(name)) {
+            parent = circusProgram
         }
     })
     return parent
