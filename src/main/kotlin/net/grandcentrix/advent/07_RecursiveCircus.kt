@@ -36,7 +36,7 @@ class Node(var value: CircusProgram) {
     }
 
     override fun toString(): String {
-        var s = "${value}"
+        var s = "$value"
         if (!children.isEmpty()) {
             s += " {" + children.map { it.toString() } + " }"
         }
@@ -54,7 +54,6 @@ fun buildTree(input: MutableList<CircusProgram>): Node {
             root = Node(circusProgram)
         }
     }
-    input.remove(root!!.value)
 
     // Build the whole tree
     buildTreeRecursive(root!!, input)
