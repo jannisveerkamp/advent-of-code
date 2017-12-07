@@ -8,7 +8,7 @@ import org.junit.runners.*
 @RunWith(JUnit4::class)
 class RecursiveCircusTest {
 
-    private val simpleTestInputValidation = mapOf(
+    private val simpleTestInputValidation = mutableMapOf(
             "pbga" to 66 children emptyList(),
             "xhth" to 57 children emptyList(),
             "ebii" to 61 children emptyList(),
@@ -34,12 +34,12 @@ class RecursiveCircusTest {
     }
 
     @Test
-    fun `simpleTestInput has the root Element "tknk"`() {
-        assertThat(rootElement(simpleTestInput)).isEqualTo("tknk")
+    fun `testInput has the root Element "rqwgj"`() {
+        assertThat(buildTree(testInput).value.name).isEqualTo("rqwgj")
     }
 
     @Test
-    fun `testInput has the root Element "rqwgj"`() {
-        assertThat(rootElement(testInput)).isEqualTo("rqwgj")
+    fun `simpleTestInput has the root Element "tknk"`() {
+        assertThat(buildTree(simpleTestInput).value.name).isEqualTo("tknk")
     }
 }

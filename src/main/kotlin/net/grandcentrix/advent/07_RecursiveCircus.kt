@@ -4,7 +4,7 @@ data class CircusProgram(val name: String, val weight: Int)
 
 infix fun Pair<String, Int>.children(that: List<String>): Pair<CircusProgram, List<String>> = Pair(CircusProgram(first, second), that)
 
-fun parseCircusInput(filename: String): Map<CircusProgram, List<String>> {
+fun parseCircusInput(filename: String): MutableMap<CircusProgram, List<String>> {
     val lines = linesFromResource(filename)
     val map = mutableMapOf<CircusProgram, List<String>>()
 
@@ -28,16 +28,65 @@ fun parseCircusInput(filename: String): Map<CircusProgram, List<String>> {
     return map
 }
 
-fun rootElement(input: Map<CircusProgram, List<String>>): String {
-    var root = ""
+class Node(var value: CircusProgram) {
+    var parent: Node? = null
+    var children: MutableList<Node> = mutableListOf()
+    var tempChildren: MutableList<String> = mutableListOf()
 
+    fun addChild(node: Node) {
+        children.add(node)
+        node.parent = this
+    }
+
+    fun addTempChild(nodeName: String) {
+        tempChildren.add(nodeName)
+    }
+
+    override fun toString(): String {
+        var s = "${value}"
+        if (!children.isEmpty()) {
+            s += " {" + children.map { it.toString() } + " }"
+        }
+        return s
+    }
+}
+
+fun buildTree(input: MutableMap<CircusProgram, List<String>>): Node {
+    var root: Node? = null
+
+    // Find the root node
     input.forEach { circusProgram, children ->
         val parent = findParent(input, circusProgram.name)
         if (parent == null) {
-            root = circusProgram.name
+            root = Node(circusProgram)
+            children.forEach {
+                root!!.addTempChild(it)
+            }
         }
     }
-    return root
+    input.remove(root!!.value)
+
+    buildTreeRecursive(root!!, input)
+
+    return root!!
+}
+
+fun buildTreeRecursive(root: Node, input: MutableMap<CircusProgram, List<String>>) {
+    root.tempChildren.forEach { tempName ->
+        input.forEach { circusProgram, children ->
+            if (tempName == circusProgram.name) {
+                val node = Node(circusProgram)
+                children.forEach {
+                    node.addTempChild(it)
+                }
+                root.addChild(node)
+            }
+        }
+    }
+
+    root.children.forEach { node ->
+        buildTreeRecursive(node, input)
+    }
 }
 
 fun findParent(input: Map<CircusProgram, List<String>>, name: String): CircusProgram? {
