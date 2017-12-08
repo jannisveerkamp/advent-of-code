@@ -27,7 +27,19 @@ fun largestValue(input: List<String>): Int {
 }
 
 fun largestTempValue(input: List<String>): Int {
-    return -1
+    val instructions = input.map { parseLine(it) }
+    val register = instructions
+            .map { it.target }
+            .associateBy( {it}, {0} )
+            .toMutableMap()
+
+    var highestValue = 0
+    instructions.forEach {
+        it.performInstruction(register)
+        highestValue = Math.max(highestValue, register.maxBy { it.value }!!.value)
+    }
+
+    return highestValue
 }
 
 fun parseLine(line: String): Instruction {
