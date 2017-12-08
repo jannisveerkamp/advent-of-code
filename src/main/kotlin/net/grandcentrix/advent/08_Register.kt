@@ -23,12 +23,11 @@ fun performInstructions(input: List<String>): Pair<Map<String, Int>, Int> {
             .associateBy( {it}, {0} )
             .toMutableMap()
 
-    var highestValue = 0
-    instructions.forEach {
+    val highestValue = instructions.map {
         it.performInstruction(register)
-        highestValue = Math.max(highestValue, register.maxBy { it.value }!!.value)
-    }
-    return register to highestValue
+        register.maxBy { it.value }!!.value
+    }.max()
+    return register to highestValue!!
 }
 
 fun parseLine(line: String): Instruction {
