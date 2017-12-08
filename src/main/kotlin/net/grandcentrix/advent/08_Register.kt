@@ -26,6 +26,10 @@ fun largestValue(input: List<String>): Int {
     return register.maxBy { it.value }!!.value
 }
 
+fun largestTempValue(input: List<String>): Int {
+    return -1
+}
+
 fun parseLine(line: String): Instruction {
     val inputs = line.split(" ")
 

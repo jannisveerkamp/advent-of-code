@@ -26,4 +26,14 @@ class RegisterTest {
     fun `testInput has largest register of 3089 after process`() {
         assertThat(largestValue(testInput)).isEqualTo(3089)
     }
+
+    @Test
+    fun `simpleTestInput has largest register of 10 while processsing`() {
+        assertThat(largestTempValue(simpleTestInput)).isEqualTo(10)
+    }
+
+    @Test
+    fun `testInput has largest register of 0 while processsing`() {
+        assertThat(largestTempValue(testInput)).isEqualTo(0)
+    }
 }
