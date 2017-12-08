@@ -1,35 +1,25 @@
 package net.grandcentrix.advent
 
-class Instruction(val target: String,
+class Instruction(val operationTarget: String,
                   private val operation: (Int) -> Int,
                   private val conditionTarget: String,
                   private val condition: (Int) -> Boolean) {
 
     fun performInstruction(register: MutableMap<String, Int>) {
         if (condition(register[conditionTarget]!!)) {
-            register[target] = operation(register[target]!!)
+            register[operationTarget] = operation(register[operationTarget]!!)
         }
     }
 }
 
-fun largestValue(input: List<String>): Int {
+fun largestValue(input: List<String>) = performInstructions(input).first.maxBy { it.value }!!.value
+
+fun largestTempValue(input: List<String>) = performInstructions(input).second
+
+fun performInstructions(input: List<String>): Pair<Map<String, Int>, Int> {
     val instructions = input.map { parseLine(it) }
     val register = instructions
-            .map { it.target }
-            .associateBy( {it}, {0} )
-            .toMutableMap()
-
-    instructions.forEach {
-        it.performInstruction(register)
-    }
-
-    return register.maxBy { it.value }!!.value
-}
-
-fun largestTempValue(input: List<String>): Int {
-    val instructions = input.map { parseLine(it) }
-    val register = instructions
-            .map { it.target }
+            .map { it.operationTarget }
             .associateBy( {it}, {0} )
             .toMutableMap()
 
@@ -38,8 +28,7 @@ fun largestTempValue(input: List<String>): Int {
         it.performInstruction(register)
         highestValue = Math.max(highestValue, register.maxBy { it.value }!!.value)
     }
-
-    return highestValue
+    return register to highestValue
 }
 
 fun parseLine(line: String): Instruction {
