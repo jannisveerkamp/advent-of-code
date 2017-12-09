@@ -23,15 +23,6 @@ class StreamTest {
     }
 
     @Test
-    fun `Group Counting`() {
-        assertThat(groupCount("{}")).isEqualTo(1)
-        assertThat(groupCount("{{{}}}")).isEqualTo(3)
-        assertThat(groupCount("{{},{}}")).isEqualTo(3)
-        assertThat(groupCount("{{{},{},{{}}}}")).isEqualTo(6)
-        assertThat(groupCount("{{},{},{},{}}")).isEqualTo(5)
-    }
-
-    @Test
     fun `Score of "{}" is 1`() {
         assertThat(scoreForInput("{}")).isEqualTo(1)
     }
@@ -72,7 +63,7 @@ class StreamTest {
     }
 
     @Test
-    fun `Score testinput is 0`() {
-        assertThat(scoreForInput(testInput)).isEqualTo(0)
+    fun `Score testinput is 14421`() {
+        assertThat(scoreForInput(testInput)).isEqualTo(14421)
     }
 }

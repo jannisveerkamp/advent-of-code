@@ -1,7 +1,19 @@
 package net.grandcentrix.advent
 
 fun scoreForInput(input: String): Int {
-    return -1
+    var currentScore = 0
+    var sum = 0
+    removeGarbage(input).forEach {
+        if (it == '{') {
+            currentScore++
+        } else if(it == '}') {
+            sum += currentScore
+            currentScore--
+        }
+    }
+
+
+    return sum
 }
 
 fun removeGarbage(input: String): String {
@@ -20,8 +32,3 @@ fun removeGarbage(input: String): String {
 
     return wrapper
 }
-
-fun groupCount(input: String): Int {
-    return -1
-}
-
