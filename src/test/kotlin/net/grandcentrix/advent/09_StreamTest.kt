@@ -11,6 +11,27 @@ class StreamTest {
     private val testInput = fromResource("09_stream_input.txt")
 
     @Test
+    fun `Remove Garbage`() {
+        assertThat(removeGarbage("{<>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<random characters>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<<<<>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<{!>}>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<!!>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<!!!>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<{o\"i!a,<{i<a>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{{<!>},{<!>},{<!>},{<a>}}")).isEqualTo("{{}}")
+    }
+
+    @Test
+    fun `Group Counting`() {
+        assertThat(groupCount("{}")).isEqualTo(1)
+        assertThat(groupCount("{{{}}}")).isEqualTo(3)
+        assertThat(groupCount("{{},{}}")).isEqualTo(3)
+        assertThat(groupCount("{{{},{},{{}}}}")).isEqualTo(6)
+        assertThat(groupCount("{{},{},{},{}}")).isEqualTo(5)
+    }
+
+    @Test
     fun `Score of "{}" is 1`() {
         assertThat(scoreForInput("{}")).isEqualTo(1)
     }
