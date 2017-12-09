@@ -17,7 +17,7 @@ class StreamTest {
         assertThat(removeGarbage("{<<<<>}")).isEqualTo("{}")
         assertThat(removeGarbage("{<{!>}>}")).isEqualTo("{}")
         assertThat(removeGarbage("{<!!>}")).isEqualTo("{}")
-        assertThat(removeGarbage("{<!!!>}")).isEqualTo("{}")
+        assertThat(removeGarbage("{<!!!>>}")).isEqualTo("{}")
         assertThat(removeGarbage("{<{o\"i!a,<{i<a>}")).isEqualTo("{}")
         assertThat(removeGarbage("{{<!>},{<!>},{<!>},{<a>}}")).isEqualTo("{{}}")
     }
