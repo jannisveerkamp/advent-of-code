@@ -8,11 +8,9 @@ fun scoreForInput(input: String): Int {
     var currentScore = 0
     var sum = 0
     removeGarbage(input).forEach {
-        if (it == '{') {
-            currentScore++
-        } else if (it == '}') {
-            sum += currentScore
-            currentScore--
+        when(it) {
+            '{' -> currentScore++
+            '}' -> sum += currentScore--
         }
     }
     return sum
@@ -30,7 +28,7 @@ private fun removeIgnoredCharacters(input: String): String {
 private fun removeGarbageWithSum(input: String): Pair<String, Int> {
     var wrapper = removeIgnoredCharacters(input)
 
-    // Count garbage
+    // Remove and count garbage
     var sum = 0
     while (wrapper.contains("<")) {
         val start = wrapper.indexOf("<")
