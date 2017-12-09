@@ -6,7 +6,7 @@ fun scoreForInput(input: String): Int {
     removeGarbage(input).forEach {
         if (it == '{') {
             currentScore++
-        } else if(it == '}') {
+        } else if (it == '}') {
             sum += currentScore
             currentScore--
         }
@@ -31,4 +31,8 @@ fun removeGarbage(input: String): String {
     }
 
     return wrapper
+}
+
+fun garbageCount(input: String): Int {
+    return -1
 }

@@ -66,4 +66,20 @@ class StreamTest {
     fun `Score testinput is 14421`() {
         assertThat(scoreForInput(testInput)).isEqualTo(14421)
     }
+
+    @Test
+    fun `Garbage Count Test`() {
+        assertThat(garbageCount("<>")).isEqualTo(0)
+        assertThat(garbageCount("<random characters>")).isEqualTo(17)
+        assertThat(garbageCount("<<<<>")).isEqualTo(3)
+        assertThat(garbageCount("<{!>}>")).isEqualTo(2)
+        assertThat(garbageCount("<!!>")).isEqualTo(0)
+        assertThat(garbageCount("<!!!>>")).isEqualTo(0)
+        assertThat(garbageCount("<{o\"i!a,<{i<a>")).isEqualTo(10)
+    }
+
+    @Test
+    fun `Garbage Count for testInput is 0`() {
+        assertThat(garbageCount(testInput)).isEqualTo(0)
+    }
 }
