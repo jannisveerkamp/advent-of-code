@@ -1,5 +1,9 @@
 package net.grandcentrix.advent
 
+fun removeGarbage(input: String) = removeGarbageWithSum(input).first
+
+fun garbageCount(input: String) = removeGarbageWithSum(input).second
+
 fun scoreForInput(input: String): Int {
     var currentScore = 0
     var sum = 0
@@ -11,36 +15,20 @@ fun scoreForInput(input: String): Int {
             currentScore--
         }
     }
-
-
     return sum
 }
 
-fun removeGarbage(input: String): String {
+private fun removeIgnoredCharacters(input: String): String {
     var wrapper = input
-
-    // Remove ignored characters
     while (wrapper.contains("!")) {
         val exl = wrapper.indexOf("!")
         wrapper = wrapper.removeRange(exl, exl + 2)
     }
-
-    // Remove garbage
-    while (wrapper.contains("<")) {
-        wrapper = wrapper.removeRange(wrapper.indexOf("<"), wrapper.indexOf(">") + 1)
-    }
-
     return wrapper
 }
 
-fun garbageCount(input: String): Int {
-    var wrapper = input
-
-    // Remove ignored characters
-    while (wrapper.contains("!")) {
-        val exl = wrapper.indexOf("!")
-        wrapper = wrapper.removeRange(exl, exl + 2)
-    }
+private fun removeGarbageWithSum(input: String): Pair<String, Int> {
+    var wrapper = removeIgnoredCharacters(input)
 
     // Count garbage
     var sum = 0
@@ -51,5 +39,5 @@ fun garbageCount(input: String): Int {
         sum += end - start - 2
     }
 
-    return sum
+    return wrapper to sum
 }
