@@ -79,7 +79,7 @@ class StreamTest {
     }
 
     @Test
-    fun `Garbage Count for testInput is 0`() {
-        assertThat(garbageCount(testInput)).isEqualTo(0)
+    fun `Garbage Count for testInput is 6817`() {
+        assertThat(garbageCount(testInput)).isEqualTo(6817)
     }
 }
