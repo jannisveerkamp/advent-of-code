@@ -22,7 +22,7 @@ class KnotHashTest {
     }
 
     @Test
-    fun `Knot hash of testInput is 0`() {
-        assertThat(knotHash(testInput, testInputLengths)).isEqualTo(0)
+    fun `Knot hash of testInput is 19591`() {
+        assertThat(knotHash(testInput, testInputLengths)).isEqualTo(19591)
     }
 }

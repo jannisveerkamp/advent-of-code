@@ -15,10 +15,11 @@ fun knot(input: List<Int>, inputLengths: List<Int>): List<Int> {
         val end = (currentPosition + length) % currentList.size
 
         val replacement = if (end >= start) {
-            currentList.subList(start, end).reversed()
+            currentList.subList(start, end)
         } else {
-            (currentList.subList(start, currentList.size) + currentList.subList(0, end)).reversed()
-        }
+            currentList.subList(start, currentList.size) + currentList.subList(0, end)
+        }.reversed()
+
         for (i in 0..(replacement.size - 1)) {
             currentList[(i + start) % currentList.size] = replacement[i]
         }
