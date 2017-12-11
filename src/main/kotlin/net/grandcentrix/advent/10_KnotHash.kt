@@ -5,28 +5,53 @@ fun knotHash(input: List<Int>, inputLengths: List<Int>): Int {
     return result[0] * result[1]
 }
 
-fun knot(input: List<Int>, inputLengths: List<Int>): List<Int> {
+fun knot(input: List<Int>, inputLengths: List<Int>, iterations: Int = 1): List<Int> {
     val currentList = input.toMutableList()
     var currentPosition = 0
     var skipSize = 0
 
-    inputLengths.forEach { length ->
-        val start = currentPosition
-        val end = (currentPosition + length) % currentList.size
+    for (ignored in 1..iterations) {
+        inputLengths.forEach { length ->
+            val start = currentPosition
+            val end = (currentPosition + length) % currentList.size
 
-        val replacement = if (end >= start) {
-            currentList.subList(start, end)
-        } else {
-            currentList.subList(start, currentList.size) + currentList.subList(0, end)
-        }.reversed()
+            val replacement = if (end >= start) {
+                currentList.subList(start, end)
+            } else {
+                currentList.subList(start, currentList.size) + currentList.subList(0, end)
+            }.reversed()
 
-        for (i in 0..(replacement.size - 1)) {
-            currentList[(i + start) % currentList.size] = replacement[i]
+            for (i in 0..(replacement.size - 1)) {
+                currentList[(i + start) % currentList.size] = replacement[i]
+            }
+
+            currentPosition = (currentPosition + length + skipSize) % currentList.size
+            skipSize++
         }
-
-        currentPosition = (currentPosition + length + skipSize) % currentList.size
-        skipSize++
     }
 
     return currentList
 }
+
+fun denseHash(input: String, inputLengths: List<Int>, iterations: Int = 1): String {
+    val sequence = appendSequence(toAscii(input))
+    val knot = knot(inputLengths, sequence, iterations)
+    val xor16 = xor16(knot)
+    return toHexadecimal(xor16)
+}
+
+fun toHexadecimal(input: List<Int>): String {
+    return input.joinToString(separator = "") {
+        java.lang.Integer.toHexString(it).padStart(2, '0')
+    }
+}
+
+fun xor16(input: List<Int>): List<Int> {
+    return (0..(input.size / 16 - 1)).map {
+        input.subList(it * 16, (it + 1) * 16).reduce { current, next -> current xor next }
+    }.toList()
+}
+
+fun toAscii(input: String): List<Int> = input.map { it.toInt() }
+
+fun appendSequence(input: List<Int>): List<Int> = input + listOf(17, 31, 73, 47, 23)
