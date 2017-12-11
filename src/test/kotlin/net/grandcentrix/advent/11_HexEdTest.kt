@@ -36,7 +36,12 @@ class HexEdTest {
     }
 
     @Test
-    fun `testInput is 0 steps away`() {
-        assertThat(hexDistance(testInput.split(","))).isEqualTo(0)
+    fun `testInput is 743 steps away`() {
+        assertThat(hexDistance(testInput.split(","))).isEqualTo(743)
+    }
+
+    @Test
+    fun `largest distance of testInput is 1493 steps away`() {
+        assertThat(largestHexDistance(testInput.split(","))).isEqualTo(1493)
     }
 }

@@ -1,38 +1,47 @@
 package net.grandcentrix.advent
 
-fun hexDistance(input: List<String>): Int {
-    var xCoordinate = 0
-    var yCoordinate = 0
-    var zCoordinate = 0
+fun hexDistance(input: List<String>) = hexDistanceAndLargestDistance(input).first
+
+fun largestHexDistance(input: List<String>) = hexDistanceAndLargestDistance(input).second
+
+fun hexDistanceAndLargestDistance(input: List<String>): Pair<Int, Int> {
+    var x = 0
+    var y = 0
+    var z = 0
+
+    var largestDistance = 0
 
     input.forEach {
         when (it) {
             "n" -> {
-                yCoordinate++
-                zCoordinate--
+                y++
+                z--
             }
             "s" -> {
-                yCoordinate--
-                zCoordinate++
+                y--
+                z++
             }
             "nw" -> {
-                yCoordinate++
-                xCoordinate--
+                y++
+                x--
             }
             "se" -> {
-                yCoordinate--
-                xCoordinate++
+                y--
+                x++
             }
             "ne" -> {
-                zCoordinate--
-                xCoordinate++
+                z--
+                x++
             }
             "sw" -> {
-                zCoordinate++
-                xCoordinate--
+                z++
+                x--
             }
         }
+        largestDistance = Math.max(distance(x, y, z), largestDistance)
     }
 
-    return Math.max(Math.max(Math.abs(xCoordinate), Math.abs(yCoordinate)), Math.abs(zCoordinate))
+    return distance(x, y, z) to largestDistance
 }
+
+fun distance(x: Int, y: Int, z: Int): Int = Math.max(Math.max(Math.abs(x), Math.abs(y)), Math.abs(z))
