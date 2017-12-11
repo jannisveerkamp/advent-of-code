@@ -8,7 +8,7 @@ import org.junit.runners.*
 @RunWith(JUnit4::class)
 class HexEdTest {
 
-    private val testInput = linesFromResource("11_hex_ed_input.txt")
+    private val testInput = fromResource("11_hex_ed_input.txt")
 
     @Test
     fun `(ne, ne, ne) is 3 steps away`() {
@@ -31,7 +31,12 @@ class HexEdTest {
     }
 
     @Test
+    fun `(n, ne, se, s, sw, nw) is 0 steps away`() {
+        assertThat(hexDistance(listOf("n", "ne", "se", "s", "sw", "nw"))).isEqualTo(0)
+    }
+
+    @Test
     fun `testInput is 0 steps away`() {
-        assertThat(hexDistance(testInput)).isEqualTo(0)
+        assertThat(hexDistance(testInput.split(","))).isEqualTo(0)
     }
 }
