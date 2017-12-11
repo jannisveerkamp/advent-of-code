@@ -11,14 +11,13 @@ fun hexDistanceAndLargestDistance(input: List<String>): Pair<Int, Int> {
     var maxDistance = 0
 
     input.forEach {
-        // "and" is totally useless here - but it looks nice ;-)
         when (it) {
-            "n"  -> y++ and z--
-            "s"  -> y-- and z++
-            "nw" -> y++ and x--
-            "se" -> y-- and x++
-            "ne" -> z-- and x++
-            "sw" -> z++ and x--
+            "n"  -> { y++; z--}
+            "s"  -> { y--; z++}
+            "nw" -> { y++; x--}
+            "se" -> { y--; x++}
+            "ne" -> { z--; x++}
+            "sw" -> { z++; x--}
         }
         maxDistance = maxOf(distance(x, y, z), maxDistance)
     }
