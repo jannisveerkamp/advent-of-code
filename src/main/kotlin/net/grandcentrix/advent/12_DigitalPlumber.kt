@@ -1,15 +1,6 @@
 package net.grandcentrix.advent
 
-fun numberOfGroups(input: List<String>): Int {
-    val programs = groupPrograms(input)
-
-    val groups = mutableSetOf<MutableSet<Int>>()
-    programs.forEach { _, value ->
-        groups.add(value)
-    }
-
-    return groups.size
-}
+fun numberOfGroups(input: List<String>) = groupPrograms(input).values.toSet().size
 
 fun groupPrograms(input: List<String>): Map<Int, MutableSet<Int>> {
     val programs = parseInput(input)
@@ -17,7 +8,7 @@ fun groupPrograms(input: List<String>): Map<Int, MutableSet<Int>> {
     var changed = true
     while (changed) {
         changed = false
-        programs.forEach { key, values ->
+        programs.forEach { _, values ->
             values.forEach {
                 val sizeBefore = programs[it]!!.size
                 programs[it]!!.addAll(values)
