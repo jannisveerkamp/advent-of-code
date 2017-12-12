@@ -18,7 +18,7 @@ class DigitalPlumberTest {
     }
 
     @Test
-    fun `program 0 from testInput is connected with 0 programs (including itself)`() {
-        assertThat(connectedPrograms(0, testInput)).isEqualTo(0)
+    fun `program 0 from testInput is connected with 239 programs (including itself)`() {
+        assertThat(connectedPrograms(0, testInput)).isEqualTo(239)
     }
 }
