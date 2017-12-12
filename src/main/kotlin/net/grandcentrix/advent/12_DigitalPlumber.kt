@@ -1,6 +1,6 @@
 package net.grandcentrix.advent
 
-fun connectedPrograms(program: Int, input: List<String>): Int {
+fun groupPrograms(input: List<String>): Map<Int, MutableSet<Int>> {
     val programs = parseInput(input)
 
     var changed = true
@@ -17,7 +17,7 @@ fun connectedPrograms(program: Int, input: List<String>): Int {
         }
     }
 
-    return programs[program]!!.size
+    return programs
 }
 
 fun parseInput(input: List<String>): Map<Int, MutableSet<Int>> {
