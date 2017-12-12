@@ -47,9 +47,7 @@ fun toHexadecimal(input: List<Int>): String {
 }
 
 fun xor16(input: List<Int>): List<Int> {
-    return (0..(input.size / 16 - 1)).map {
-        input.subList(it * 16, (it + 1) * 16).reduce { current, next -> current xor next }
-    }.toList()
+    return input.chunked(16).map { it.reduce { current, next -> current xor next }}
 }
 
 fun toAscii(input: String): List<Int> = input.map { it.toInt() }
