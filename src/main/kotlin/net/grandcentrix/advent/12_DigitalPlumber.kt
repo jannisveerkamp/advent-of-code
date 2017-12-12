@@ -1,28 +1,24 @@
 package net.grandcentrix.advent
 
-fun numberOfGroups(input: List<String>) = groupPrograms(input).values.toSet().size
+internal fun numberOfGroups(input: List<String>) = joinGroups(input).values.toSet().size
 
-fun groupPrograms(input: List<String>): Map<Int, MutableSet<Int>> {
-    val programs = parseInput(input)
+internal fun joinGroups(input: List<String>): Map<Int, MutableSet<Int>> {
+    val groups = parseInput(input)
 
     var changed = true
     while (changed) {
         changed = false
-        programs.forEach { _, values ->
-            values.forEach {
-                val sizeBefore = programs[it]!!.size
-                programs[it]!!.addAll(values)
-                if (sizeBefore != programs[it]!!.size) {
-                    changed = true
-                }
+        groups.forEach { _, values ->
+            values.map {
+                changed = groups[it]!!.addAll(values) || changed
             }
         }
     }
 
-    return programs
+    return groups
 }
 
-fun parseInput(input: List<String>): Map<Int, MutableSet<Int>> {
+private fun parseInput(input: List<String>): Map<Int, MutableSet<Int>> {
     return input.associate {
         val key = it.substring(0, it.indexOf(" ")).toInt()
         val values = it.substring(it.indexOf(">") + 2, it.length).split(", ").map { it2 -> it2.toInt() }

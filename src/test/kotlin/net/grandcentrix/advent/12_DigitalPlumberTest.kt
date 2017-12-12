@@ -14,12 +14,12 @@ class DigitalPlumberTest {
 
     @Test
     fun `program 0 from simpleTestInput is connected with 6 programs (including itself)`() {
-        assertThat(groupPrograms(simpleTestInput)[0]!!.size).isEqualTo(6)
+        assertThat(joinGroups(simpleTestInput)[0]!!.size).isEqualTo(6)
     }
 
     @Test
     fun `program 0 from testInput is connected with 239 programs (including itself)`() {
-        assertThat(groupPrograms(testInput)[0]!!.size).isEqualTo(239)
+        assertThat(joinGroups(testInput)[0]!!.size).isEqualTo(239)
     }
 
     @Test
