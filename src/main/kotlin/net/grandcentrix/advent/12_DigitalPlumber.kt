@@ -1,7 +1,14 @@
 package net.grandcentrix.advent
 
 fun numberOfGroups(input: List<String>): Int {
-    return -1
+    val programs = groupPrograms(input)
+
+    val groups = mutableSetOf<MutableSet<Int>>()
+    programs.forEach { _, value ->
+        groups.add(value)
+    }
+
+    return groups.size
 }
 
 fun groupPrograms(input: List<String>): Map<Int, MutableSet<Int>> {

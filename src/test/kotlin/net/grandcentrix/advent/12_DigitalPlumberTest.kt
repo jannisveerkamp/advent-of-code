@@ -28,7 +28,7 @@ class DigitalPlumberTest {
     }
 
     @Test
-    fun `Number of groups from testInput 0`() {
-        assertThat(numberOfGroups(testInput)).isEqualTo(0)
+    fun `Number of groups from testInput 215`() {
+        assertThat(numberOfGroups(testInput)).isEqualTo(215)
     }
 }
