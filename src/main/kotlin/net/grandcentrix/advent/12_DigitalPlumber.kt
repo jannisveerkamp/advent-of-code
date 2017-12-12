@@ -1,5 +1,9 @@
 package net.grandcentrix.advent
 
+fun numberOfGroups(input: List<String>): Int {
+    return -1
+}
+
 fun groupPrograms(input: List<String>): Map<Int, MutableSet<Int>> {
     val programs = parseInput(input)
 
