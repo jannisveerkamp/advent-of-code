@@ -10,7 +10,7 @@ fun knot(input: List<Int>, inputLengths: List<Int>, iterations: Int = 1): List<I
     var currentPosition = 0
     var skipSize = 0
 
-    for (ignored in 1..iterations) {
+    repeat(iterations) {
         inputLengths.forEach { length ->
             val start = currentPosition
             val end = (currentPosition + length) % currentList.size
@@ -21,8 +21,8 @@ fun knot(input: List<Int>, inputLengths: List<Int>, iterations: Int = 1): List<I
                 currentList.subList(start, currentList.size) + currentList.subList(0, end)
             }.reversed()
 
-            for (i in 0..(replacement.size - 1)) {
-                currentList[(i + start) % currentList.size] = replacement[i]
+            repeat(replacement.size) {
+                currentList[(it + start) % currentList.size] = replacement[it]
             }
 
             currentPosition = (currentPosition + length + skipSize) % currentList.size
