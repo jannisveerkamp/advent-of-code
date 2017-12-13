@@ -35,13 +35,9 @@ private fun adjustDirections(positions: Map<Int, Int>, directions: Map<Int, Int>
 }
 
 internal fun minimumDelayWithoutGettingCaught(input: Map<Int, Int>): Int {
-    generateSequence (0, Int::inc).forEach { currentDelay ->
-        val caught = input.any {
-            (currentDelay + it.key) % (it.value * 2 - 2) == 0
-        }
-        if (!caught) {
-            return currentDelay
-        }
+    var delay = 0
+    while (input.entries.any { (delay + it.key) % (it.value * 2 - 2) == 0 }) {
+        delay++
     }
-    return -1
+    return delay
 }
