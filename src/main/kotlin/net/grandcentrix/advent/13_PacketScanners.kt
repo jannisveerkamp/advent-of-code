@@ -24,7 +24,7 @@ private fun moveScanners(positions: Map<Int, Int>, directions: Map<Int, Int>): M
     }
 }
 
-fun adjustDirections(positions: Map<Int, Int>, directions: Map<Int, Int>, input: Map<Int, Int>): Map<Int, Int> {
+private fun adjustDirections(positions: Map<Int, Int>, directions: Map<Int, Int>, input: Map<Int, Int>): Map<Int, Int> {
     return directions.mapValues { entry ->
         when {
             positions[entry.key] == 0 -> 1
@@ -32,4 +32,8 @@ fun adjustDirections(positions: Map<Int, Int>, directions: Map<Int, Int>, input:
             else -> entry.value
         }
     }
+}
+
+internal fun minimumDelayWithoutGettingCaught(input: Map<Int, Int>): Int {
+    return -1
 }

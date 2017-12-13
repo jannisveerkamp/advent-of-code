@@ -70,4 +70,14 @@ class PacketScannersTest {
     fun `Severity of getting caught in testInput is 1624`() {
         assertThat(severity(testInput)).isEqualTo(1624)
     }
+
+    @Test
+    fun `Minimum delay without getting caught forsimpleTestInput is 10`() {
+        assertThat(minimumDelayWithoutGettingCaught(simpleTestInput)).isEqualTo(10)
+    }
+
+    @Test
+    fun `Minimum delay without getting caught testInput is 0`() {
+        assertThat(minimumDelayWithoutGettingCaught(testInput)).isEqualTo(0)
+    }
 }
