@@ -67,7 +67,7 @@ class PacketScannersTest {
     }
 
     @Test
-    fun `Severity of getting caught in testInput is 0`() {
-        assertThat(severity(testInput)).isEqualTo(0)
+    fun `Severity of getting caught in testInput is 1624`() {
+        assertThat(severity(testInput)).isEqualTo(1624)
     }
 }
