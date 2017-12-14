@@ -18,8 +18,7 @@ internal fun distinctRegions(input: String): Int {
     grid.forEachIndexed { indexRow, row ->
         row.forEachIndexed { indexColumn, value ->
             if (value == 1) {
-                markAround(grid, indexRow, indexColumn, label)
-                label++
+                markAround(grid, indexRow, indexColumn, label++)
             }
         }
     }
@@ -47,13 +46,7 @@ private fun markAround(grid: Array<IntArray>, row: Int, column: Int, label: Int)
 }
 
 private fun to2dArray(buildGrid: Sequence<String>): Array<IntArray> {
-    val array = array2dOfInt(GRID_SIZE, GRID_SIZE)
-    buildGrid.forEachIndexed { rowIndex, row ->
-        row.forEachIndexed { charIndex, char ->
-            array[rowIndex][charIndex] = char.toString().toInt()
-        }
-    }
-    return array
+    return buildGrid.toList().map { it.map { it.toString().toInt() }.toIntArray() }.toTypedArray()
 }
 
 internal fun toBinary(hexHash: String): String {
