@@ -48,7 +48,7 @@ class DiskDefragmentation {
     }
 
     @Test
-    fun `testInput has 0 distinct regions`() {
-        assertThat(distinctRegions(testInput)).isEqualTo(0)
+    fun `testInput has 1089 distinct regions`() {
+        assertThat(distinctRegions(testInput)).isEqualTo(1089)
     }
 }
