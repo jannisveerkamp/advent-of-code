@@ -1,7 +1,5 @@
 package net.grandcentrix.advent
 
-fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray> = Array(sizeOuter) { IntArray(sizeInner) }
-
 fun manhattanDistance(location: Int): Int = SpiralMemory(location).manhattanDistance(location)
 
 fun valueForPosition(position: Int): Int = SpiralMemory(position).getMemoryAt(position)
