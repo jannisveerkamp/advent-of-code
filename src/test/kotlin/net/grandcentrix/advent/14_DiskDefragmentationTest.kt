@@ -41,4 +41,14 @@ class DiskDefragmentation {
     fun `testInput used up 8204 squares`() {
         assertThat(squaresUsed(testInput)).isEqualTo(8204)
     }
+
+    @Test
+    fun `simpleTestInput has 1242 distinct regions`() {
+        assertThat(distinctRegions(simpleTestInput)).isEqualTo(1242)
+    }
+
+    @Test
+    fun `testInput has 0 distinct regions`() {
+        assertThat(distinctRegions(testInput)).isEqualTo(0)
+    }
 }
