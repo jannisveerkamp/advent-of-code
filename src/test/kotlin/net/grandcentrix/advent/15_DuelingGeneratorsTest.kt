@@ -83,4 +83,24 @@ class DuelingGeneratorsTest {
     fun `Dueling 277 and 349 40_000_000 times gives an equals count of 592`() {
         assertThat(duelEqualsCount(277, 349, 40_000_000)).isEqualTo(592)
     }
+
+    @Test
+    fun `Dueling 65 and 8_921 1055 times while dropping values gives an equals count of 0`() {
+        assertThat(duelEqualsCountDropValues(65, 8_921, 1055)).isEqualTo(0)
+    }
+
+    @Test
+    fun `Dueling 65 and 8_921 1056 times while dropping values gives an equals count of 1`() {
+        assertThat(duelEqualsCountDropValues(65, 8_921, 1056)).isEqualTo(1)
+    }
+
+    @Test
+    fun `Dueling 65 and 8_921 5_000_000 times while dropping values gives an equals count of 309`() {
+        assertThat(duelEqualsCountDropValues(65, 8_921, 5_000_000)).isEqualTo(309)
+    }
+
+    @Test
+    fun `Dueling 277 and 349 45_000_000 times while dropping values gives an equals count of 320`() {
+        assertThat(duelEqualsCountDropValues(277, 349, 5_000_000)).isEqualTo(320)
+    }
 }
