@@ -38,7 +38,6 @@ class DuelingGeneratorsTest {
         assertThat(toBinary(1431495498)).isEqualTo("01010101010100101110001101001010")
     }
 
-
     @Test
     fun `binary representation of 1744312007 is 01100111111110000001011011000111`() {
         assertThat(toBinary(1744312007)).isEqualTo("01100111111110000001011011000111")

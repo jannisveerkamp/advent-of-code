@@ -34,10 +34,6 @@ internal fun duelEqualsCountDropValues(startValueGeneratorA: Int, startValueGene
             { it -> it % 4 != 0L }, { it -> it % 8 != 0L })
 }
 
-internal fun equalsLast16Bits(s1: String, s2: String): Boolean {
-    return s1.takeLast(16) == s2.takeLast(16)
-}
+internal fun equalsLast16Bits(s1: String, s2: String) = s1.takeLast(16) == s2.takeLast(16)
 
-internal fun toBinary(number: Long): String {
-    return java.lang.Integer.toBinaryString(number.toInt()).padStart(32, '0')
-}
+internal fun toBinary(number: Long) = java.lang.Integer.toBinaryString(number.toInt()).padStart(32, '0')
