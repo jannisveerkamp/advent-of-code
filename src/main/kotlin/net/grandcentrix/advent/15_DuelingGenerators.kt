@@ -11,9 +11,8 @@ internal fun duelEqualsCount(startA: Int, startB: Int, iterations: Int,
                              ruleB: (Long) -> Boolean = { false }): Int {
     var currentA = startA.toLong()
     var currentB = startB.toLong()
-    var matches = 0
 
-    repeat(iterations) {
+    return generateSequence(0, Int::inc).take(iterations).count {
         do {
             currentA = (currentA * FACTOR_GENERATOR_A) % DIVISOR
         } while (ruleA(currentA))
@@ -21,12 +20,8 @@ internal fun duelEqualsCount(startA: Int, startB: Int, iterations: Int,
             currentB = (currentB * FACTOR_GENERATOR_B) % DIVISOR
         } while (ruleB(currentB))
 
-        if (equalsLast16Bits(toBinary(currentA), toBinary(currentB))) {
-            matches++
-        }
+        equalsLast16Bits(toBinary(currentA), toBinary(currentB))
     }
-
-    return matches
 }
 
 internal fun duelEqualsCountDropValues(startValueGeneratorA: Int, startValueGeneratorB: Int, iterations: Int): Int {
