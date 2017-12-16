@@ -1,18 +1,25 @@
 package net.grandcentrix.advent
 
-internal fun permutate(input: String, permutations: String): String {
+internal fun permutate(input: String, permutations: String, iterations: Int = 1): String {
     val commands = permutations.split(",")
     var result = input
+    val results = mutableListOf(input)
 
-    commands.forEach {
-        result = when {
-            it.startsWith("s") -> spin(result, it)
-            it.startsWith("x") -> exchange(result, it)
-            it.startsWith("p") -> partner(result, it)
-            else -> it
+    repeat(iterations) {
+        commands.forEach {
+            result = when {
+                it.startsWith("s") -> spin(result, it)
+                it.startsWith("x") -> exchange(result, it)
+                it.startsWith("p") -> partner(result, it)
+                else -> it
+            }
+        }
+        if (results.contains(result)) {
+            return results[iterations % results.size]
+        } else {
+            results.add(result)
         }
     }
-
     return result
 }
 

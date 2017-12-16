@@ -41,4 +41,14 @@ class PermutationPromenadeTest {
     fun `Permutation of "abcdefghijklmnop" with testInput is "giadhmkpcnbfjelo"`() {
         assertThat(permutate("abcdefghijklmnop", testInput)).isEqualTo("giadhmkpcnbfjelo")
     }
+
+    @Test
+    fun `2 Permutations of "abcde" with simpleTestInput is "ceadb"`() {
+        assertThat(permutate("abcde", simpleTestInput, 2)).isEqualTo("ceadb")
+    }
+
+    @Test
+    fun `1_000_000_000 Permutations of "abcdefghijklmnop" with testInput is "njfgilbkcoemhpad"`() {
+        assertThat(permutate("abcdefghijklmnop", testInput, 1_000_000_000)).isEqualTo("njfgilbkcoemhpad")
+    }
 }
