@@ -15,6 +15,7 @@ internal fun permutate(input: String, permutations: String, iterations: Int = 1)
             }
         }
         if (results.contains(result)) {
+            // We already saw that iteration - so the following results will repeat itself.
             return results[iterations % results.size]
         } else {
             results.add(result)
@@ -29,13 +30,12 @@ internal fun spin(input: String, permutation: String): String {
 }
 
 internal fun exchange(input: String, permutation: String): String {
-    val pos1 = permutation.substring(1, permutation.indexOf("/")).toInt()
-    val pos2 = permutation.substring(permutation.indexOf("/") + 1).toInt()
-    val builder = StringBuilder(input)
-    val charAtPos1 = builder[pos1]
-    builder.setCharAt(pos1, builder[pos2])
-    builder.setCharAt(pos2, charAtPos1)
-    return builder.toString()
+    val pos = permutation.substring(1).split("/").map { it.toInt() }.sorted()
+    val sb = StringBuilder(input)
+    val temp = input[pos[0]]
+    sb.setCharAt(pos[0], input[pos[1]])
+    sb.setCharAt(pos[1], temp)
+    return sb.toString()
 }
 
 internal fun partner(input: String, permutation: String): String {
