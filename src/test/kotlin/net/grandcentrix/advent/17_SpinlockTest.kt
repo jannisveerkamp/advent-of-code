@@ -18,7 +18,7 @@ class SpinlockTest {
     }
 
     @Test
-    fun `Circular spinning for testInput is 0"`() {
-        assertThat(circularSpin(testInput)).isEqualTo(0)
+    fun `Circular spinning for testInput is 600"`() {
+        assertThat(circularSpin(testInput)).isEqualTo(600)
     }
 }
