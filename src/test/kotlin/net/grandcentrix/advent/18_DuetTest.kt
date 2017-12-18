@@ -16,21 +16,21 @@ class DuetTest {
 
     @Test
     fun `At the time the recover operation is executed, the frequency of the last sound played is 4`() {
-        assertThat(duet(simpleTestInput)).isEqualTo(4L)
+        assertThat(DuetProgram(simpleTestInput).duet()).isEqualTo(4L)
     }
 
     @Test
     fun `At the time the recover operation is executed, the frequency of the last sound played is 2951`() {
-        assertThat(duet(testInput)).isEqualTo(2951L)
+        assertThat(DuetProgram(testInput).duet()).isEqualTo(2951L)
     }
 
     @Test
-    fun `Program 1 of of simpleTestInputWithoutSound sent 4 values`() {
-        assertThat(duetWithoutSound(simpleTestInputWithoutSound)).isEqualTo(4)
+    fun `Program 1 of of simpleTestInputWithoutSound sent 3 values`() {
+        assertThat(duetWithTwoPrograms(simpleTestInputWithoutSound)).isEqualTo(3)
     }
 
     @Test
-    fun `Program 1 of of testInput sent 0 values`() {
-        assertThat(duetWithoutSound(testInput)).isEqualTo(0)
+    fun `Program 1 of of testInput sent 7366 values`() {
+        assertThat(duetWithTwoPrograms(testInput)).isEqualTo(7366)
     }
 }
