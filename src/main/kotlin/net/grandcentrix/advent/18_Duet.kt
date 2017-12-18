@@ -35,6 +35,7 @@ abstract class AbstractDuetProgram(input: List<String>) {
 }
 
 class DuetProgram(input: List<String>) : AbstractDuetProgram(input) {
+
     private var lastSound = 0L
 
     override fun snd(target: String) {
@@ -44,7 +45,7 @@ class DuetProgram(input: List<String>) : AbstractDuetProgram(input) {
     override fun rcv(command: DuetCommand) = register[command.target]!! > 0
 
     fun duet(): Long {
-        loop@ while (currentPosition in 0..(commands.size - 1)) {
+        while (currentPosition in 0..(commands.size - 1)) {
             if (nextCommand()) {
                 return lastSound
             }
