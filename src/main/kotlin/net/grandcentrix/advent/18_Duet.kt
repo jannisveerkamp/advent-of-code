@@ -4,8 +4,8 @@ data class DuetCommand(val command: String, val target: String, val value: Long?
     fun getValue(register: MutableMap<String, Long>): Long = value ?: register[targetValue]!!
 }
 
-fun duet(steps: List<String>): Long {
-    val commands = parseCommands(steps)
+fun duet(input: List<String>): Long {
+    val commands = parseCommands(input)
     val register: MutableMap<String, Long> = createInitialRegister(commands)
     var currentPosition = 0
     var lastSound = 0L
@@ -29,6 +29,10 @@ fun duet(steps: List<String>): Long {
     }
 
     return lastSound
+}
+
+fun duetWithoutSound(input: List<String>): Int {
+    return -1
 }
 
 fun createInitialRegister(steps: List<DuetCommand>): MutableMap<String, Long> {
