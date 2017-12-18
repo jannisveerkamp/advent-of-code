@@ -24,7 +24,7 @@ abstract class AbstractDuetProgram(input: List<String>) {
             "mul" -> register[target] = register[target]!! * command.getValue(register)
             "mod" -> register[target] = register[target]!! % command.getValue(register)
             "rcv" -> if (rcv(command)) return true
-            "jgz" -> if (target == "1" || register[target]!! > 0) {
+            "jgz" -> if (register[target] ?: target.toLong() > 0) {
                 currentPosition += command.getValue(register).toInt()
                 return false
             }
