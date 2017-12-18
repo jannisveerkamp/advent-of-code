@@ -18,7 +18,7 @@ class DuetTest {
     }
 
     @Test
-    fun `At the time the recover operation is executed, the frequency of the last sound played is 0`() {
-        assertThat(duet(testInput)).isEqualTo(0)
+    fun `At the time the recover operation is executed, the frequency of the last sound played is 2951`() {
+        assertThat(duet(testInput)).isEqualTo(2951)
     }
 }
