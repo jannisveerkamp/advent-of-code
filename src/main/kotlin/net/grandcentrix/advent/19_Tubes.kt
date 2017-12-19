@@ -29,19 +29,23 @@ fun lettersOnPath(input: List<String>): String {
 
     while (true) {
         position = direction.move(position)
-        val item = grid[position]
 
+        val item = grid[position]
         if (item == '+') {
-            direction = when (direction) {
-                UP, DOWN -> if (LEFT.follows(grid, position) != ' ') LEFT else RIGHT
-                LEFT, RIGHT -> if (UP.follows(grid, position) != ' ') UP else DOWN
-            }
+            direction = turn(direction, grid, position)
         } else if (item != '|' && item != '-') {
             listOfLetters.add(item)
             if (direction.follows(grid, position) == ' ') {
                 return listOfLetters.joinToString("")
             }
         }
+    }
+}
+
+private fun turn(direction: Direction, grid: Array<CharArray>, position: Pair<Int, Int>): Direction {
+    return when (direction) {
+        UP, DOWN -> if (LEFT.follows(grid, position) != ' ') LEFT else RIGHT
+        LEFT, RIGHT -> if (UP.follows(grid, position) != ' ') UP else DOWN
     }
 }
 
