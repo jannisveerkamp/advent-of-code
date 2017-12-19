@@ -5,47 +5,40 @@ import net.grandcentrix.advent.Direction.LEFT
 import net.grandcentrix.advent.Direction.RIGHT
 import net.grandcentrix.advent.Direction.UP
 
-enum class Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+enum class Direction(val x: Int, val y: Int) {
+    UP(0, -1),
+    DOWN(0, 1),
+    LEFT(-1, 0),
+    RIGHT(1, 0);
+
+    fun move(pos: Pair<Int, Int>) = pos.first + x to pos.second + y
+
+    fun follows(grid: Array<CharArray>, position: Pair<Int, Int>) = grid[move(position)]
 }
+
+private operator fun Array<CharArray>.get(index: Pair<Int, Int>) = this[index.second][index.first]
 
 fun lettersOnPath(input: List<String>): String {
     val maximumLength = input.maxBy { it.length }!!.length
     val grid = input.map { it.padEnd(maximumLength, ' ').toCharArray() }.toTypedArray()
 
     // Initial position and direction
-    var posX = grid[0].indexOf('|')
-    var posY = 0
+    var position = grid[0].indexOf('|') to 0
     var direction = DOWN
     val listOfLetters = mutableListOf<Char>()
 
     while (true) {
-        when (direction) {
-            UP -> posY--
-            DOWN -> posY++
-            LEFT -> posX--
-            RIGHT -> posX++
-        }
-
-        val item = grid[posY][posX]
+        position = direction.move(position)
+        val item = grid[position]
 
         if (item == '+') {
             direction = when (direction) {
-                UP, DOWN -> if (grid[posY][posX - 1] != ' ') LEFT else RIGHT
-                LEFT, RIGHT -> if (grid[posY - 1][posX] != ' ') UP else DOWN
+                UP, DOWN -> if (LEFT.follows(grid, position) != ' ') LEFT else RIGHT
+                LEFT, RIGHT -> if (UP.follows(grid, position) != ' ') UP else DOWN
             }
         } else if (item != '|' && item != '-') {
             listOfLetters.add(item)
-            val done = when (direction) {
-                UP -> grid[posY - 1][posX] == ' '
-                DOWN -> grid[posY + 1][posX] == ' '
-                LEFT -> grid[posY][posX - 1] == ' '
-                RIGHT -> grid[posY][posX + 1] == ' '
-            }
-            if (done) {
+            if (direction.follows(grid, position) == ' ') {
                 return listOfLetters.joinToString("")
             }
         }
