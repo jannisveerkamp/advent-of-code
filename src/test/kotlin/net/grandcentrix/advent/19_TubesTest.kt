@@ -8,9 +8,9 @@ import org.junit.runners.*
 @RunWith(JUnit4::class)
 class TubesTest {
 
-    private val simpleTestInput = fromResource("19_tubes_simple_input.txt")
+    private val simpleTestInput = linesFromResource("19_tubes_simple_input.txt")
 
-    private val testInput = fromResource("19_tubes_input.txt")
+    private val testInput = linesFromResource("19_tubes_input.txt")
 
     @Test
     fun `Going through simpleTestInput the packet sees the letters ABCDEF`() {
@@ -18,7 +18,7 @@ class TubesTest {
     }
 
     @Test
-    fun `Going through testInput the packet sees the letters A`() {
-        assertThat(lettersOnPath(testInput)).isEqualTo("A")
+    fun `Going through testInput the packet sees the letters BPDKCZWHGT`() {
+        assertThat(lettersOnPath(testInput)).isEqualTo("BPDKCZWHGT")
     }
 }
