@@ -35,10 +35,7 @@ fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair
     return particles.minBy { it.distanceToZero() }!!.id to particles.size
 }
 
-fun parseParticle(position: Int, line: String): Particle {
-    val elements = line.split(", ")
-    val p = elements[0].substring(3, elements[0].length - 1).split(",").map { it.toLong() }
-    val v = elements[1].substring(3, elements[1].length - 1).split(",").map { it.toLong() }
-    val a = elements[2].substring(3, elements[2].length - 1).split(",").map { it.toLong() }
-    return Particle(position, p[0], p[1], p[2], v[0], v[1], v[2], a[0], a[1], a[2])
+fun parseParticle(position: Int, input: String): Particle {
+    val pva = input.split(", ").map { it.substring(3, it.length - 1).split(",").map { it.toLong() } }.flatten()
+    return Particle(position, pva[0], pva[1], pva[2], pva[3], pva[4], pva[5], pva[6], pva[7], pva[8])
 }
