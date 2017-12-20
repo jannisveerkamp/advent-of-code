@@ -2,10 +2,22 @@ package net.grandcentrix.advent
 
 import kotlin.math.absoluteValue
 
-data class Particle(var id: Int, var x: Long, var y: Long, var z: Long,
-                    var vx: Long, var vy: Long, var vz: Long,
-                    var ax: Long, var ay: Long, var az: Long) {
+data class Particle(var id: Int, private var x: Long, private var y: Long, private var z: Long,
+                    private var vx: Long, private var vy: Long, private var vz: Long,
+                    private var ax: Long, private var ay: Long, private var az: Long) {
+
+    fun move() {
+        vx += ax
+        vy += ay
+        vz += az
+        x += vx
+        y += vy
+        z += vz
+    }
+
     fun distanceToZero() = x.absoluteValue + y.absoluteValue + z.absoluteValue
+
+    fun collides(particle: Particle) = x == particle.x && y == particle.y && z == particle.z
 }
 
 fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair<Int, Int> {
@@ -13,18 +25,13 @@ fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair
 
     repeat(500) {
         particles.forEach {
-            it.vx += it.ax
-            it.vy += it.ay
-            it.vz += it.az
-            it.x += it.vx
-            it.y += it.vy
-            it.z += it.vz
+            it.move()
         }
 
         if (withDestruction) {
             particles.forEach { outer ->
                 particles.forEach { inner ->
-                    if (outer !== inner && outer.x == inner.x && outer.y == inner.y && outer.z == inner.z) {
+                    if (outer !== inner && outer.collides(inner)) {
                         outer.id = -1
                         inner.id = -1
                     }
