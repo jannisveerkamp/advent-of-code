@@ -27,7 +27,7 @@ class ParticleSwarmTest {
     }
 
     @Test
-    fun `Closest particle to (0,0,0) for testInput in the long run is #0`() {
-        assertThat(closestParticle(testInput)).isEqualTo(0)
+    fun `Closest particle to (0,0,0) for testInput in the long run is #364`() {
+        assertThat(closestParticle(testInput)).isEqualTo(364)
     }
 }
