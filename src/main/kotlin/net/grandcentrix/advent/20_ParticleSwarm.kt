@@ -24,20 +24,12 @@ fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair
     val particles = input.mapIndexed { index, it -> parseParticle(index, it) }.toMutableList()
 
     repeat(500) {
-        particles.forEach {
-            it.move()
-        }
+        particles.forEach { it.move() }
 
         if (withDestruction) {
-            particles.forEach { outer ->
-                particles.forEach { inner ->
-                    if (outer !== inner && outer.collides(inner)) {
-                        outer.id = -1
-                        inner.id = -1
-                    }
-                }
+            particles.removeIf { particle ->
+                particles.any { particle !== it && particle.collides(it) }
             }
-            particles.removeIf { it.id == -1 }
         }
     }
     return particles.minBy { it.distanceToZero() }!!.id to particles.size
