@@ -11,7 +11,7 @@ data class Particle(var id: Int, var x: Long, var y: Long, var z: Long,
 fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair<Int, Int> {
     val particles = input.mapIndexed { index, it -> parseParticle(index, it) }.toMutableList()
 
-    repeat(1000) {
+    repeat(500) {
         particles.forEach {
             it.vx += it.ax
             it.vy += it.ay
@@ -33,7 +33,6 @@ fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair
             particles.removeIf { it.id == -1 }
         }
     }
-    // not 655
     return particles.minBy { it.distanceToZero() }!!.id to particles.size
 }
 
