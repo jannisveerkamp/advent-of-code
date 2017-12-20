@@ -17,7 +17,7 @@ class ParticleSwarmTest {
             "p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>",
             "p=<-4,0,0>, v=<2,0,0>, a=<0,0,0>",
             "p=<-2,0,0>, v=<1,0,0>, a=<0,0,0>",
-            "p=< 3,0,0>, v=<-1,0,0>, a=< 0,0,0>"
+            "p=<3,0,0>, v=<-1,0,0>, a=<0,0,0>"
     )
 
     private val testInput = linesFromResource("20_particle_swarm_input.txt")
@@ -30,21 +30,21 @@ class ParticleSwarmTest {
 
     @Test
     fun `Closest particle to (0,0,0) for simpleTestInput in the long run is #0`() {
-        assertThat(closestParticle(simpleTestInput)).isEqualTo(0)
+        assertThat(closestParticle(simpleTestInput).first).isEqualTo(0)
     }
 
     @Test
     fun `Closest particle to (0,0,0) for testInput in the long run is #364`() {
-        assertThat(closestParticle(testInput)).isEqualTo(364)
+        assertThat(closestParticle(testInput).first).isEqualTo(364)
     }
 
     @Test
-    fun `Closest particle to (0,0,0) with destruction for simpleTestInputTask2 in the long run is #3`() {
-        assertThat(closestParticleWithDestruction(simpleTestInputTask2)).isEqualTo(3)
+    fun `Closest particle to (0,0,0) with destruction for simpleTestInputTask2 is #3 total of 1 Particle`() {
+        assertThat(closestParticle(simpleTestInputTask2, true)).isEqualTo(3 to 1)
     }
 
     @Test
-    fun `Closest particle to (0,0,0) with destruction for testInput in the long run is #0`() {
-        assertThat(closestParticleWithDestruction(testInput)).isEqualTo(0)
+    fun `Closest particle to (0,0,0) with destruction for testInput is #655 total of 420 Particles`() {
+        assertThat(closestParticle(testInput, true)).isEqualTo(655 to 420)
     }
 }

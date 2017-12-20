@@ -2,14 +2,14 @@ package net.grandcentrix.advent
 
 import kotlin.math.absoluteValue
 
-data class Particle(val id: Int, var x: Long, var y: Long, var z: Long,
+data class Particle(var id: Int, var x: Long, var y: Long, var z: Long,
                     var vx: Long, var vy: Long, var vz: Long,
                     var ax: Long, var ay: Long, var az: Long) {
     fun distanceToZero() = x.absoluteValue + y.absoluteValue + z.absoluteValue
 }
 
-fun closestParticle(input: List<String>): Int {
-    val particles = input.mapIndexed { index, it -> parseParticle(index, it) }
+fun closestParticle(input: List<String>, withDestruction: Boolean = false): Pair<Int, Int> {
+    val particles = input.mapIndexed { index, it -> parseParticle(index, it) }.toMutableList()
 
     repeat(1000) {
         particles.forEach {
@@ -20,13 +20,21 @@ fun closestParticle(input: List<String>): Int {
             it.y += it.vy
             it.z += it.vz
         }
+
+        if (withDestruction) {
+            particles.forEach { outer ->
+                particles.forEach { inner ->
+                    if (outer !== inner && outer.x == inner.x && outer.y == inner.y && outer.z == inner.z) {
+                        outer.id = -1
+                        inner.id = -1
+                    }
+                }
+            }
+            particles.removeIf { it.id == -1 }
+        }
     }
-
-    return particles.minBy { it.distanceToZero() }!!.id
-}
-
-fun closestParticleWithDestruction(input: List<String>): Int {
-    return -1
+    // not 655
+    return particles.minBy { it.distanceToZero() }!!.id to particles.size
 }
 
 fun parseParticle(position: Int, line: String): Particle {
