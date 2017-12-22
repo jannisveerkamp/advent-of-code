@@ -29,7 +29,7 @@ internal class Grid(var items: Array<Array<GridPiece>>) {
     }
 }
 
-class GridPiece(var rows: List<String>) {
+internal class GridPiece(var rows: List<String>) {
     fun grow(rules: Map<String, String>) {
         rows = applyRule(rules, rows.joinToString("/")).split("/")
     }
@@ -59,13 +59,8 @@ internal fun applyRule(rules: Map<String, String>, sequence: String): String {
     if (rules.containsKey(sequence)) {
         return rules[sequence]!!
     }
-    // Flip horizontally
-    val flipH = sequence.split("/").map { it.reversed() }.joinToString("/")
-    if (rules.containsKey(flipH)) {
-        return rules[flipH]!!
-    }
-    // Flip vertically
-    val flipV = sequence.split("/").reversed().joinToString("/")
+    // Flip vertically (one direction is sufficient)
+    val flipV = flipVertical(sequence)
     if (rules.containsKey(flipV)) {
         return rules[flipV]!!
     }
@@ -76,27 +71,24 @@ internal fun applyRule(rules: Map<String, String>, sequence: String): String {
         if (rules.containsKey(rotation)) {
             return rules[rotation]!!
         }
-        // Flip horizontally
-        val flipHR = rotation.split("/").map { it.reversed() }.joinToString("/")
-        if (rules.containsKey(flipHR)) {
-            return rules[flipHR]!!
-        }
-        // Flip vertically
-        val flipVR = rotation.split("/").reversed().joinToString("/")
+        // Flip vertically (one direction is sufficient)
+        val flipVR = flipVertical(rotation)
         if (rules.containsKey(flipVR)) {
             return rules[flipVR]!!
         }
     }
-
-    throw IllegalArgumentException("no matching rule found for $sequence :(")
+    // This shouldn't happen (haha)
+    throw IllegalArgumentException("No matching rule found for $sequence :(")
 }
+
+private fun flipVertical(sequence: String) = sequence.split("/").reversed().joinToString("/")
 
 internal fun rotateArray(input: Array<String>): Array<CharArray> {
     val n = input.size
     val newArray = Array(n) { CharArray(n) }
     for (i in 0 until n) {
         for (j in 0 until n) {
-            newArray[i][j] = input[n - 1 - j][i]
+            newArray[i][j] = input[n - j - 1][i]
         }
     }
     return newArray
