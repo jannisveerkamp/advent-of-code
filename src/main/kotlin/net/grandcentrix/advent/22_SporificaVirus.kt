@@ -24,7 +24,7 @@ enum class InfectionState {
         }
     }
 
-    fun enounter(): InfectionState {
+    fun encounter(): InfectionState {
         return when (this) {
             CLEAN -> WEAKENED
             WEAKENED -> INFECTED
@@ -67,17 +67,19 @@ enum class Dir {
 }
 
 internal fun bulkBurstSimple(input: List<String>, iterations: Int): Int {
-    return bulkBurst(input, iterations, { it.simpleEncounter() }, { dir, state -> dir.turnSimple(state) },
-            iterations / 4 + input.size * 2)
+    return bulkBurst(input, iterations, iterations / 4 + input.size * 2,
+            { it.simpleEncounter() },
+            { dir, state -> dir.turnSimple(state) })
 }
 
 internal fun bulkBurstComplex(input: List<String>, iterations: Int): Int {
-    return bulkBurst(input, iterations, { it.enounter() }, { dir, state -> dir.turnComplex(state) },
-            sqrt(iterations.toDouble()).toInt() / 2 + input.size * 2)
+    return bulkBurst(input, iterations, sqrt(iterations.toDouble()).toInt() / 2 + input.size * 2,
+            { it.encounter() },
+            { dir, state -> dir.turnComplex(state) })
 }
 
-internal fun bulkBurst(input: List<String>, iterations: Int, encounter: (InfectionState) -> InfectionState,
-                       turn: (Dir, InfectionState) -> Dir, gridSize: Int): Int {
+private fun bulkBurst(input: List<String>, iterations: Int, gridSize: Int,
+                      encounter: (InfectionState) -> InfectionState, turn: (Dir, InfectionState) -> Dir): Int {
     val grid: Array<Array<InfectionState>> = Array(gridSize) { Array(gridSize) { CLEAN } }
 
     val offset = gridSize / 2 - input.size / 2
