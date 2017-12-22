@@ -16,7 +16,7 @@ enum class InfectionState {
     INFECTED,
     FLAGGED;
 
-    fun simpleEncounter(): InfectionState {
+    fun encounterSimple(): InfectionState {
         return when (this) {
             CLEAN -> INFECTED
             INFECTED -> CLEAN
@@ -24,7 +24,7 @@ enum class InfectionState {
         }
     }
 
-    fun encounter(): InfectionState {
+    fun encounterComplex(): InfectionState {
         return when (this) {
             CLEAN -> WEAKENED
             WEAKENED -> INFECTED
@@ -40,12 +40,12 @@ enum class Dir {
     LEFT,
     RIGHT;
 
-    fun turnSimple(infected: InfectionState) = turn(infected == INFECTED)
+    fun turnSimple(infected: InfectionState) = turnAround(infected == INFECTED)
 
     fun turnComplex(infected: InfectionState): Dir {
         return when (infected) {
-            CLEAN -> turn(false)
-            INFECTED -> turn(true)
+            CLEAN -> turnAround(false)
+            INFECTED -> turnAround(true)
             WEAKENED -> this
             FLAGGED -> when (this) {
                 UP -> DOWN
@@ -56,7 +56,7 @@ enum class Dir {
         }
     }
 
-    private fun turn(right: Boolean): Dir {
+    private fun turnAround(right: Boolean): Dir {
         return when (this) {
             UP -> if (right) RIGHT else LEFT
             DOWN -> if (right) LEFT else RIGHT
@@ -67,14 +67,14 @@ enum class Dir {
 }
 
 internal fun bulkBurstSimple(input: List<String>, iterations: Int): Int {
-    return bulkBurst(input, iterations, iterations / 4 + input.size * 2,
-            { it.simpleEncounter() },
+    return bulkBurst(input, iterations, iterations / 4 + input.size * 2, // Highly scientific measured
+            { it.encounterSimple() },
             { dir, state -> dir.turnSimple(state) })
 }
 
 internal fun bulkBurstComplex(input: List<String>, iterations: Int): Int {
-    return bulkBurst(input, iterations, sqrt(iterations.toDouble()).toInt() / 2 + input.size * 2,
-            { it.encounter() },
+    return bulkBurst(input, iterations, sqrt(iterations.toDouble()).toInt() / 2 + input.size * 2, // Same here
+            { it.encounterComplex() },
             { dir, state -> dir.turnComplex(state) })
 }
 
@@ -98,10 +98,9 @@ private fun bulkBurst(input: List<String>, iterations: Int, gridSize: Int,
 
     repeat(iterations) {
         // 1. Turn
-        //direction = direction.turn(grid[posY][posX])
         direction = turn(direction, grid[posY][posX])
 
-        // 2. Clean/infect
+        // 2. Change infection status
         grid[posY][posX] = encounter(grid[posY][posX])
         if (grid[posY][posX] == INFECTED) {
             infectionCount++
