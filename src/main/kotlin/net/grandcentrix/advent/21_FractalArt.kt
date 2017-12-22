@@ -55,28 +55,22 @@ internal fun doArt(input: List<String>, iterations: Int): Int {
 }
 
 internal fun applyRule(rules: Map<String, String>, sequence: String): String {
-    // No action needed
-    if (rules.containsKey(sequence)) {
-        return rules[sequence]!!
-    }
-    // Flip vertically (one direction is sufficient)
-    val flipV = flipVertical(sequence)
-    if (rules.containsKey(flipV)) {
-        return rules[flipV]!!
-    }
     // Rotations
     var rotation = sequence
-    repeat(3) {
-        rotation = rotateArray(rotation.split("/").toTypedArray()).joinToString("/") { it.joinToString("") }
+    repeat(4) {
+        if (it > 0) {
+            rotation = rotateArray(rotation.split("/").toTypedArray()).joinToString("/") { it.joinToString("") }
+        }
         if (rules.containsKey(rotation)) {
             return rules[rotation]!!
         }
         // Flip vertically (one direction is sufficient)
-        val flipVR = flipVertical(rotation)
-        if (rules.containsKey(flipVR)) {
-            return rules[flipVR]!!
+        val flip = flipVertical(rotation)
+        if (rules.containsKey(flip)) {
+            return rules[flip]!!
         }
     }
+
     // This shouldn't happen (haha)
     throw IllegalArgumentException("No matching rule found for $sequence :(")
 }
