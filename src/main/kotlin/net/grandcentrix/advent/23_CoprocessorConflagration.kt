@@ -33,4 +33,12 @@ class DuetProgramAgain(input: List<String>) : AbstractDuetProgram(input) {
         }
         return numberOfMul
     }
+
+    fun registerH(): Long {
+        register["a"] = 1
+        while (currentPosition in 0 until commands.size) {
+            nextCommand()
+        }
+        return register["h"]!!
+    }
 }

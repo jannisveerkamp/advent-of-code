@@ -11,7 +11,12 @@ class CoprocessorConflagrationTest {
     private val testInput = linesFromResource("23_coprocessor_conflagration_input.txt")
 
     @Test
-    fun `mul is called 0 times with testInput`() {
-        assertThat(DuetProgramAgain(testInput).duet()).isEqualTo(0)
+    fun `mul is called 3969 times with testInput`() {
+        assertThat(DuetProgramAgain(testInput).duet()).isEqualTo(3969)
+    }
+
+    @Test
+    fun `initial value for a of 1 results in a value 0 for register h`() {
+        assertThat(DuetProgramAgain(testInput).registerH()).isEqualTo(0)
     }
 }
