@@ -12,6 +12,6 @@ class CoprocessorConflagrationTest {
 
     @Test
     fun `mul is called 0 times with testInput`() {
-        assertThat(duetAgain(testInput)).isEqualTo(0)
+        assertThat(DuetProgramAgain(testInput).duet()).isEqualTo(0)
     }
 }

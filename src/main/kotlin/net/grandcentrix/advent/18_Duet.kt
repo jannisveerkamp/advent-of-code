@@ -14,7 +14,7 @@ abstract class AbstractDuetProgram(input: List<String>) {
 
     abstract fun rcv(command: DuetCommand): Boolean
 
-    fun nextCommand(): Boolean {
+    open fun nextCommand(): Boolean {
         val command = commands[currentPosition]
         val target = command.target
         when (command.command) {
