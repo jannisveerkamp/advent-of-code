@@ -16,7 +16,7 @@ class CoprocessorConflagrationTest {
     }
 
     @Test
-    fun `initial value for a of 1 results in a value 0 for register h`() {
-        assertThat(DuetProgramAgain(testInput).registerH()).isEqualTo(0)
+    fun `initial value for a of 1 results in a value 917 for register h`() {
+        assertThat(registerH()).isEqualTo(917)
     }
 }
