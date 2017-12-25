@@ -37,7 +37,7 @@ class ElectromagneticMoatTest {
     }
 
     @Test
-    fun `Strength of longest Bridge for testInput is 0`() {
-        assertThat(strengthOfLongestBridge(testInput)).isEqualTo(0)
+    fun `Strength of longest Bridge for testInput is 1642`() {
+        assertThat(strengthOfLongestBridge(testInput)).isEqualTo(1642)
     }
 }
