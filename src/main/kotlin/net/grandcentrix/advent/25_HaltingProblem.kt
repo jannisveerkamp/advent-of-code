@@ -1,8 +1,7 @@
 package net.grandcentrix.advent
 
-// direction == true <=> right
-class State(val value0: Int, val direction0: Int, val nextState0: String,
-            val value1: Int, val direction1: Int, val nextState1: String)
+private class State(val value0: Int, val direction0: Int, val nextState0: String,
+                    val value1: Int, val direction1: Int, val nextState1: String)
 
 internal fun diagnosticChecksum(input: List<String>): Int {
     var currentState = initialState(input[0])
@@ -10,11 +9,11 @@ internal fun diagnosticChecksum(input: List<String>): Int {
     val instructions = parseInstructions(input.subList(3, input.size))
 
     var currentPosition = 0
-    val memory = mutableMapOf(0 to 0)
+    val memory = mutableMapOf<Int, Int>()
 
     repeat(steps) {
         val state = instructions[currentState]!!
-        if (memory[currentPosition]!! == 0) {
+        if (memory.getOrPut(currentPosition, { 0 }) == 0) {
             memory[currentPosition] = state.value0
             currentPosition += state.direction0
             currentState = state.nextState0
@@ -23,19 +22,16 @@ internal fun diagnosticChecksum(input: List<String>): Int {
             currentPosition += state.direction1
             currentState = state.nextState1
         }
-        if (!memory.containsKey(currentPosition)) {
-            memory.put(currentPosition, 0)
-        }
     }
 
     return memory.values.sum()
 }
 
-fun steps(input: String) = input.substringAfter("after ").substringBefore(" ").toInt()
+private fun steps(input: String) = input.substringAfter("after ").substringBefore(" ").toInt()
 
-fun initialState(input: String) = input.dropLast(1).last().toString()
+private fun initialState(input: String) = input.dropLast(1).last().toString()
 
-fun parseInstructions(input: List<String>): Map<String, State> {
+private fun parseInstructions(input: List<String>): Map<String, State> {
     return input.chunked(10).associate {
         val name = it[0].dropLast(1).last().toString()
         val value0 = if (it[2].contains("1")) 1 else 0
