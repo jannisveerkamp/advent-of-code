@@ -18,11 +18,6 @@ private fun findPossibleParts(joint: Int, before: List<Pair<Int, Int>>, rest: Li
             .maxWith(comparator) ?: before
 }
 
-private fun parseInput(input: List<String>): List<Pair<Int, Int>> {
-    return input.map {
-        val split = it.split("/")
-        split[0].toInt() to split[1].toInt()
-    }.toList()
-}
+private fun parseInput(input: List<String>) = input.map { it.split("/").map { it.toInt() } }.map { it[0] to it[1] }
 
 private fun strength(bridge: List<Pair<Int, Int>>) = bridge.sumBy { it.first + it.second }
