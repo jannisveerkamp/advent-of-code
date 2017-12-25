@@ -1,5 +1,9 @@
 package net.grandcentrix.advent
 
+internal fun strengthOfLongestBridge(input: List<String>): Int {
+    return -1
+}
+
 internal fun strongestBridge(input: List<String>): Int {
     val strongestBridge = findPossibleParts(0, listOf(), parseInput(input))
     return strengthForBridge(strongestBridge)
