@@ -2,7 +2,8 @@ private fun solveDay01a(input: String): Int = input.split("\n").sumOf { line ->
     ("${line.first { it.isDigit() }}${line.last { it.isDigit() }}").toInt()
 }
 
-private val numbers = mapOf(
+
+private val numbersMapping = mapOf(
     "one" to 1,
     "two" to 2,
     "three" to 3,
@@ -14,44 +15,29 @@ private val numbers = mapOf(
     "nine" to 9
 )
 
-private fun solveDay01b(input: String): Int {
-    return input.split("\n").sumOf { line ->
-        val firstDigit = line.indexOfFirst { it.isDigit() }
-        val first = numbers
-            .filter { line.contains(it.key) }
-            .minByOrNull {
-                line.indexOf(it.key)
-            }
-        val firstNumber = if (first != null) {
-            val firstIndex = line.indexOf(first.key)
-            if (firstDigit != -1 && firstDigit < firstIndex) {
-                line[firstDigit].digitToInt()
-            } else {
-                first.value
-            }
-        } else {
-            line[firstDigit].digitToInt()
-        }
+private val numbers = numbersMapping.keys
 
-        val lastDigit = line.indexOfLast { it.isDigit() }
-        val last = numbers
-            .filter { line.contains(it.key) }
-            .maxByOrNull {
-                line.lastIndexOf(it.key)
-            }
-        val lastNumber = if (last != null) {
-            val lastIndex = line.lastIndexOf(last.key)
-            if (lastDigit != -1 && lastDigit > lastIndex) {
-                line[lastDigit].digitToInt()
-            } else {
-                last.value
-            }
-        } else {
-            line[lastDigit].digitToInt()
-        }
-        val number = "${firstNumber}${lastNumber}"
-        number.toInt()
+private fun solveDay01b(input: String): Int = input.split("\n").sumOf { line ->
+    val firstDigit = line.indexOfFirst { it.isDigit() }
+    val firstWord = line.findAnyOf(numbers)
+
+    val firstNumber = if (firstWord == null || (firstDigit < firstWord.first && firstDigit != -1)) {
+        line[firstDigit]
+    } else {
+        numbersMapping[firstWord.second]
     }
+
+    val lastDigit = line.indexOfLast { it.isDigit() }
+    val lastWord = line.findLastAnyOf(numbers)
+
+    val lastNumber = if (lastWord == null || (lastDigit > lastWord.first && lastDigit != -1)) {
+        line[lastDigit]
+    } else {
+        numbersMapping[lastWord.second]
+    }
+
+    val number = "${firstNumber}${lastNumber}"
+    number.toInt()
 }
 
 fun main() {
