@@ -1,5 +1,8 @@
-/build
-.gradle
-.idea
 *.iml
-/out
+.gradle
+.idea/*
+!.idea/codeStyles/
+.DS_Store
+/build
+build/
+release/
