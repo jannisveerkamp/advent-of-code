@@ -35,9 +35,7 @@ private fun solveDay01b(input: String): Int = input.split("\n").sumOf { line ->
     } else {
         numbersMapping[lastWord.second]
     }
-
-    val number = "${firstNumber}${lastNumber}"
-    number.toInt()
+    "${firstNumber}${lastNumber}".toInt()
 }
 
 fun main() {
