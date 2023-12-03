@@ -1,57 +1,46 @@
 import kotlin.math.max
 
-private fun solveDay02a(input: String): Int {
-    val redMax = 12
-    val greenMax = 13
-    val blueMax = 14
+private data class Cube(val number: Int, val color: String)
+private data class Game(val gameId: Int, val cubes: List<List<Cube>>)
 
-    var counter = 0
-    input.split("\n").map { line ->
-        val (gameNumber, allCubes) = line.removePrefix("Game ").split(": ")
-        val cubes = allCubes.trim().split("; ")
-        var possible = true
-        cubes.map { draw ->
-            val rgb = draw.split(", ")
-            rgb.forEach {
-                val (numberString, color) = it.split(" ")
-                val number = numberString.toInt()
-                when (color) {
-                    "red" -> if (number > redMax) possible = false
-                    "green" -> if (number > greenMax) possible = false
-                    "blue" -> if (number > blueMax) possible = false
-                }
-            }
-        }
-        if (possible) {
-            counter += gameNumber.toInt()
+private fun parseCubes(input: String): List<Game> = input.split("\n").map { line ->
+    val (gameNumber, allCubes) = line.removePrefix("Game ").split(": ")
+    val cubes = allCubes.trim().split("; ").map { draw ->
+        draw.split(", ").map { rgb ->
+            val (numberString, color) = rgb.split(" ")
+            Cube(numberString.toInt(), color)
         }
     }
-    return counter
+    Game(gameNumber.toInt(), cubes)
 }
 
-private fun solveDay02b(input: String): Int {
-    var counter = 0
-    input.split("\n").map { line ->
-        val (_, allCubes) = line.removePrefix("Game ").split(": ")
-        val cubes = allCubes.trim().split("; ")
-        var minRed = 0
-        var minBlue = 0
-        var minGreen = 0
-        cubes.map { draw ->
-            val rgb = draw.split(", ")
-            rgb.forEach {
-                val (numberString, color) = it.split(" ")
-                val number = numberString.toInt()
-                when (color) {
-                    "red" -> minRed = max(minRed, number)
-                    "green" -> minGreen = max(minGreen, number)
-                    "blue" -> minBlue = max(minBlue, number)
-                }
+private fun solveDay02a(input: String): Int = parseCubes(input).sumOf { game ->
+    game.cubes.forEach { setOfCubes ->
+        setOfCubes.forEach { cube ->
+            when (cube.color) {
+                "red" -> if (cube.number > 12) return@sumOf 0
+                "green" -> if (cube.number > 13) return@sumOf 0
+                "blue" -> if (cube.number > 14) return@sumOf 0
             }
         }
-        counter += minRed * minGreen * minBlue
     }
-    return counter
+    game.gameId
+}
+
+private fun solveDay02b(input: String): Int = parseCubes(input).sumOf { game ->
+    var minRed = 0
+    var minBlue = 0
+    var minGreen = 0
+    game.cubes.forEach { setOfCubes ->
+        setOfCubes.forEach { cube ->
+            when (cube.color) {
+                "red" -> minRed = max(minRed, cube.number)
+                "green" -> minGreen = max(minGreen, cube.number)
+                "blue" -> minBlue = max(minBlue, cube.number)
+            }
+        }
+    }
+    minRed * minGreen * minBlue
 }
 
 fun main() {
