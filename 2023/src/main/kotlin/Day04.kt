@@ -1,33 +1,25 @@
 import kotlin.math.pow
 
-private fun solveDay04a(input: String): Int = input.split("\n").sumOf { line ->
-    val (_, numbers) = line.split(": ")
-    val (winning, my) = numbers.replace("  ", " ").split(" | ")
+private fun parseLine(line: String): Pair<Int, Int> {
+    val (card, numbers) = line.split(": ")
+    val cardNumber = card.removePrefix("Card ").trim().toInt()
+    val (winning, myNumbers) = numbers.replace("  ", " ").split(" | ")
     val winningNumbers = winning.split(" ")
-    val myNumbers = my.split(" ")
-
-    val myWinningNumbers = myNumbers.count { number ->
+    return cardNumber to myNumbers.split(" ").count { number ->
         winningNumbers.contains(number)
     }
-    when (myWinningNumbers) {
-        0, 1 -> myWinningNumbers
-        else -> 2.toDouble().pow(myWinningNumbers - 1).toInt()
-    }
+}
+
+private fun solveDay04a(input: String): Int = input.split("\n").sumOf { line ->
+    val (_, myWinningNumbers) = parseLine(line)
+    2.toDouble().pow(myWinningNumbers - 1).toInt()
 }
 
 private fun solveDay04b(input: String): Int {
     val extraCopies = mutableMapOf<Int, Int>()
     return input.split("\n").sumOf { line ->
-        val (card, numbers) = line.split(": ")
-        val cardNumber = card.removePrefix("Card ").trim().toInt()
-        val (winning, my) = numbers.replace("  ", " ").split(" | ")
-        val winningNumbers = winning.split(" ")
-        val myNumbers = my.split(" ")
+        val (cardNumber, myWinningNumbers) = parseLine(line)
         val currentExtraCopies = extraCopies[cardNumber] ?: 0
-
-        val myWinningNumbers = myNumbers.count { number ->
-            winningNumbers.contains(number)
-        }
         (0 until myWinningNumbers).forEach {
             extraCopies[cardNumber + it + 1] = (extraCopies[cardNumber + it + 1] ?: 0) + 1 + currentExtraCopies
         }
