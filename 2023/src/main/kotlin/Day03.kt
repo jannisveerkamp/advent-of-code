@@ -1,6 +1,3 @@
-import kotlin.math.max
-import kotlin.math.min
-
 private data class Cell(val value: Char, var marked: Boolean)
 
 private fun parseGrid(input: String): Array<Array<Cell>> {
@@ -114,7 +111,6 @@ private fun solveDay03b(input: String): Int {
     return numberSum
 }
 
-
 fun main() {
     val inputExample = readFile("day03_example_2.txt")
     val inputTask = readFile("day03.txt")
@@ -122,6 +118,6 @@ fun main() {
     println("Solution for task 1 example: ${solveDay03a(inputExample)}") // 4361
     println("Solution for task 1 task:    ${solveDay03a(inputTask)}") // 530849
     println("Solution for task 2 example: ${solveDay03b(inputExample)}") // 467835
-    println("Solution for task 2 task:    ${solveDay03b(inputTask)}") // ???
+    println("Solution for task 2 task:    ${solveDay03b(inputTask)}") // 84900879
 }
 
