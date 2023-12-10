@@ -46,11 +46,7 @@ private enum class MCell(val char: Char) {
 }
 
 private fun nextMazeCell(
-    oldDirection: Direction,
-    currentCell: MCell,
-    x: Int,
-    y: Int,
-    maze: Array<Array<MCell>>
+    oldDirection: Direction, currentCell: MCell, x: Int, y: Int, maze: Array<Array<MCell>>
 ): Pair<MCell, Direction>? {
     val nextDirection = currentCell.next(oldDirection)
     return if (nextDirection == null) {
@@ -59,15 +55,7 @@ private fun nextMazeCell(
         val delta = nextDirection.toPoint()
         val newX = x + delta.x
         val newY = y + delta.y
-        if (
-            newX < 0 || newY < 0 || newX > maze.first().size - 1 || newY > maze.size - 1 ||
-            when (nextDirection) {
-                Direction.N -> maze[newY][newX] !in listOf(MCell.NS, MCell.SE, MCell.SW)
-                Direction.S -> maze[newY][newX] !in listOf(MCell.NS, MCell.NE, MCell.NW)
-                Direction.W -> maze[newY][newX] !in listOf(MCell.WE, MCell.SE, MCell.NE)
-                Direction.E -> maze[newY][newX] !in listOf(MCell.WE, MCell.SW, MCell.NW)
-            }
-        ) {
+        if (newX < 0 || newY < 0 || newX > maze.first().size - 1 || newY > maze.size - 1) {
             null
         } else {
             val nextCell = maze[newY][newX]
@@ -76,7 +64,7 @@ private fun nextMazeCell(
     }
 }
 
-private fun solveDay10(input: String, startCell: MCell): Int {
+private fun solveDay10(input: String, startCell: MCell, startDirection: Direction): Int {
     val maze = MCell.fromString(input)
     var xStart = 0
     var yStart = 0
@@ -90,25 +78,14 @@ private fun solveDay10(input: String, startCell: MCell): Int {
     }
     var currentPath: List<MCell> = emptyList()
     var currentCell: MCell? = startCell
-    var currentDirection = when (startCell) {
-        MCell.NS -> Direction.N
-        MCell.WE -> Direction.W
-        MCell.NE -> Direction.N
-        MCell.NW -> Direction.N
-        MCell.SW -> Direction.S
-        MCell.SE -> Direction.E
-        MCell.G -> null
-        MCell.START -> null
-    }
+    var currentDirection: Direction? = startDirection
     while (currentDirection != null && currentCell != null) {
         val next = nextMazeCell(currentDirection, currentCell, xStart, yStart, maze)
         currentCell = next?.first
         currentDirection = next?.second
         xStart += currentDirection?.toPoint()?.x ?: 0
         yStart += currentDirection?.toPoint()?.y ?: 0
-        currentCell?.let {
-            currentPath = currentPath + currentCell
-        }
+        currentCell?.let { currentPath = currentPath + it }
     }
 
     return (currentPath.size + 1) / 2
@@ -119,9 +96,9 @@ fun main() {
     val inputExample2 = readFile("day10_example_2.txt")
     val inputTask = readFile("day10.txt")
 
-    println("Solution for task 1 example: ${solveDay10(inputExample, MCell.SE)}") // 4
-    println("Solution for task 1 example: ${solveDay10(inputExample2, MCell.SE)}") // 8
-    println("Solution for task 1 task:    ${solveDay10(inputTask, MCell.NE)}") // 6947
+    println("Solution for task 1 example: ${solveDay10(inputExample, MCell.SE, Direction.E)}") // 4
+    println("Solution for task 1 example: ${solveDay10(inputExample2, MCell.SE, Direction.E)}") // 8
+    println("Solution for task 1 task:    ${solveDay10(inputTask, MCell.NE, Direction.E)}") // 6947
 //    println("Solution for task 2 example: ${solveDay10(inputExample)}") // ???
 //    println("Solution for task 2 task:    ${solveDay10(inputTask)}") // ???
 }
