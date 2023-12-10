@@ -91,15 +91,25 @@ private fun solveDay10(input: String, startCell: MCell, startDirection: Directio
     return (currentPath.size + 1) / 2
 }
 
+private fun solveDay10b(input: String, startCell: MCell, startDirection: Direction): Int {
+    // TODO
+    return solveDay10(input, startCell, startDirection)
+}
+
 fun main() {
     val inputExample = readFile("day10_example.txt")
     val inputExample2 = readFile("day10_example_2.txt")
+    val inputExample3 = readFile("day10_example_3.txt")
+    val inputExample4 = readFile("day10_example_4.txt")
+    val inputExample5 = readFile("day10_example_5.txt")
     val inputTask = readFile("day10.txt")
 
     println("Solution for task 1 example: ${solveDay10(inputExample, MCell.SE, Direction.E)}") // 4
     println("Solution for task 1 example: ${solveDay10(inputExample2, MCell.SE, Direction.E)}") // 8
     println("Solution for task 1 task:    ${solveDay10(inputTask, MCell.NE, Direction.E)}") // 6947
-//    println("Solution for task 2 example: ${solveDay10(inputExample)}") // ???
-//    println("Solution for task 2 task:    ${solveDay10(inputTask)}") // ???
+    println("Solution for task 2 example: ${solveDay10b(inputExample3, MCell.SE, Direction.E)}") // 4
+    println("Solution for task 2 example: ${solveDay10b(inputExample4, MCell.SE, Direction.E)}") // 8
+    println("Solution for task 2 example: ${solveDay10b(inputExample5, MCell.SW, Direction.S)}") // 10
+    println("Solution for task 2 task:    ${solveDay10b(inputTask, MCell.NE, Direction.E)}") // ???
 }
 
