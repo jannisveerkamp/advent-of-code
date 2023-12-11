@@ -45,6 +45,8 @@ private enum class MCell(val char: Char) {
     }
 }
 
+private data class MCellWithCoordinates(val cell: MCell, val x: Int, val y: Int)
+
 private fun nextMazeCell(
     oldDirection: Direction, currentCell: MCell, x: Int, y: Int, maze: Array<Array<MCell>>
 ): Pair<MCell, Direction>? {
@@ -64,7 +66,7 @@ private fun nextMazeCell(
     }
 }
 
-private fun solveDay10(input: String, startCell: MCell, startDirection: Direction): Int {
+private fun buildPath(input: String, startCell: MCell, startDirection: Direction): List<MCellWithCoordinates> {
     val maze = MCell.fromString(input)
     var xStart = 0
     var yStart = 0
@@ -76,24 +78,47 @@ private fun solveDay10(input: String, startCell: MCell, startDirection: Directio
             }
         }
     }
-    var currentPath: List<MCell> = emptyList()
+    var currentPath: List<MCellWithCoordinates> = emptyList()
     var currentCell: MCell? = startCell
     var currentDirection: Direction? = startDirection
     while (currentDirection != null && currentCell != null) {
         val next = nextMazeCell(currentDirection, currentCell, xStart, yStart, maze)
         currentCell = next?.first
         currentDirection = next?.second
+        val x = xStart
+        val y = yStart
         xStart += currentDirection?.toPoint()?.x ?: 0
         yStart += currentDirection?.toPoint()?.y ?: 0
-        currentCell?.let { currentPath = currentPath + it }
+        currentCell?.let { currentPath = currentPath + MCellWithCoordinates(it, x, y) }
     }
+    return currentPath
+}
 
-    return (currentPath.size + 1) / 2
+private fun solveDay10a(input: String, startCell: MCell, startDirection: Direction): Int {
+    val path = buildPath(input, startCell, startDirection)
+    return (path.size + 1) / 2
 }
 
 private fun solveDay10b(input: String, startCell: MCell, startDirection: Direction): Int {
-    // TODO
-    return solveDay10(input, startCell, startDirection)
+    val path = buildPath(input, startCell, startDirection)
+    val pipes = if (startCell in listOf(MCell.NS, MCell.NE, MCell.NW)) "|LJS" else "|LJ"
+    val maze = MCell.fromString(input).mapIndexed { y, line ->
+        line.mapIndexed { x, cell -> MCellWithCoordinates(cell, x, y) }
+    }
+
+    var count = 0
+    for (y in maze.indices) {
+        var inside = false
+        for (x in maze.first().indices) {
+            if (path.any { it.x == x && it.y == y } && maze[y][x].cell.char in pipes) {
+                inside = !inside
+            }
+            if (path.none { it.x == x && it.y == y } && inside) {
+                count++
+            }
+        }
+    }
+    return count
 }
 
 fun main() {
@@ -104,12 +129,12 @@ fun main() {
     val inputExample5 = readFile("day10_example_5.txt")
     val inputTask = readFile("day10.txt")
 
-    println("Solution for task 1 example: ${solveDay10(inputExample, MCell.SE, Direction.E)}") // 4
-    println("Solution for task 1 example: ${solveDay10(inputExample2, MCell.SE, Direction.E)}") // 8
-    println("Solution for task 1 task:    ${solveDay10(inputTask, MCell.NE, Direction.E)}") // 6947
+    println("Solution for task 1 example: ${solveDay10a(inputExample, MCell.SE, Direction.E)}") // 4
+    println("Solution for task 1 example: ${solveDay10a(inputExample2, MCell.SE, Direction.E)}") // 8
+    println("Solution for task 1 task:    ${solveDay10a(inputTask, MCell.NE, Direction.E)}") // 6947
     println("Solution for task 2 example: ${solveDay10b(inputExample3, MCell.SE, Direction.E)}") // 4
     println("Solution for task 2 example: ${solveDay10b(inputExample4, MCell.SE, Direction.E)}") // 8
     println("Solution for task 2 example: ${solveDay10b(inputExample5, MCell.SW, Direction.S)}") // 10
-    println("Solution for task 2 task:    ${solveDay10b(inputTask, MCell.NE, Direction.E)}") // ???
+    println("Solution for task 2 task:    ${solveDay10b(inputTask, MCell.NE, Direction.E)}") // 273
 }
 
