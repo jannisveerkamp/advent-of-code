@@ -1,17 +1,19 @@
 import common.PointL
 
-private fun solveDay11(input: String, extraGalaxies: Int): Long {
-    val grid = input.split("\n").map { it.toCharArray().map { it }.toTypedArray() }.toTypedArray()
-
-    val extraSpaceX = mutableListOf<Int>()
-    (0 until grid.first().size).forEach { x ->
-        if (grid.all { it[x] == '.' }) {
-            extraSpaceX.add(x)
-        }
+private fun extraSpace(grid: Array<Array<Char>>): Pair<List<Int>, List<Int>> {
+    val extraSpaceX = (0 until grid.first().size).mapNotNull { x ->
+        if (grid.all { it[x] == '.' }) x else null
     }
     val extraSpaceY = grid.mapIndexedNotNull { index, line ->
         if (line.contains('#')) null else index
     }
+    return extraSpaceX to extraSpaceY
+}
+
+private fun solveDay11(input: String, extraGalaxies: Int): Long {
+    val grid = input.split("\n").map { line -> line.toCharArray().map { it }.toTypedArray() }.toTypedArray()
+    val (extraSpaceX, extraSpaceY) = extraSpace(grid)
+
     val galaxies = grid.mapIndexed { y, line ->
         line.mapIndexedNotNull { x, char ->
             if (char == '#') PointL(x.toLong(), y.toLong()) else null
@@ -19,20 +21,9 @@ private fun solveDay11(input: String, extraGalaxies: Int): Long {
     }.flatten()
     return galaxies.sumOf { first ->
         galaxies.sumOf { second ->
-            val extraY = (extraSpaceY).count {
-                it in (first.y + 1 until second.y) || it in (second.y + 1 until first.y)
-            }
-            val extraX = (extraSpaceX).count {
-                it in (first.x + 1 until second.x) || it in (second.x + 1 until first.x)
-            }
-            val manhattan = first.manhattan(second)
-            if (manhattan > 0) {
-                val result = manhattan + (extraX + extraY) * (extraGalaxies - 1)
-                result
-            } else {
-                0L
-            }
-
+            val extraY = (extraSpaceY).count { it in (first.y..second.y) || it in (second.y..first.y) }
+            val extraX = (extraSpaceX).count { it in (first.x..second.x) || it in (second.x..first.x) }
+            first.manhattan(second) + (extraX + extraY) * extraGalaxies
         }
     } / 2L
 }
@@ -44,8 +35,8 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay11(inputExample, 1)}") // 374
     println("Solution for task 1 task:    ${solveDay11(inputTask, 1)}") // 10154062
-    println("Solution for task 2 example: ${solveDay11(inputExample, 10)}") // 1030
-    println("Solution for task 2 example: ${solveDay11(inputExample, 100)}") // 8410
-    println("Solution for task 2 task:    ${solveDay11(inputTask, 1000000)}") // 553083047914
+    println("Solution for task 2 example: ${solveDay11(inputExample, 10 - 1)}") // 1030
+    println("Solution for task 2 example: ${solveDay11(inputExample, 100 - 1)}") // 8410
+    println("Solution for task 2 task:    ${solveDay11(inputTask, 1000000 - 1)}") // 553083047914
 }
 
