@@ -1,6 +1,6 @@
-import common.Point
+import common.PointL
 
-private fun solveDay11(input: String): Int {
+private fun solveDay11(input: String, extraGalaxies: Int): Long {
     val grid = input.split("\n").map { it.toCharArray().map { it }.toTypedArray() }.toTypedArray()
 
     val extraSpaceX = mutableListOf<Int>()
@@ -14,7 +14,7 @@ private fun solveDay11(input: String): Int {
     }
     val galaxies = grid.mapIndexed { y, line ->
         line.mapIndexedNotNull { x, char ->
-            if (char == '#') Point(x, y) else null
+            if (char == '#') PointL(x.toLong(), y.toLong()) else null
         }
     }.flatten()
     return galaxies.sumOf { first ->
@@ -27,14 +27,14 @@ private fun solveDay11(input: String): Int {
             }
             val manhattan = first.manhattan(second)
             if (manhattan > 0) {
-                val result = manhattan + extraX + extraY
+                val result = manhattan + (extraX + extraY) * (extraGalaxies - 1)
                 result
             } else {
-                0
+                0L
             }
 
         }
-    } / 2
+    } / 2L
 }
 
 
@@ -42,9 +42,10 @@ fun main() {
     val inputExample = readFile("day11_example.txt")
     val inputTask = readFile("day11.txt")
 
-    println("Solution for task 1 example: ${solveDay11(inputExample)}") // 374
-    println("Solution for task 1 task:    ${solveDay11(inputTask)}") // 10154062
-    println("Solution for task 2 example: ${solveDay11(inputExample)}") // ???
-    println("Solution for task 2 task:    ${solveDay11(inputTask)}") // ???
+    println("Solution for task 1 example: ${solveDay11(inputExample, 1)}") // 374
+    println("Solution for task 1 task:    ${solveDay11(inputTask, 1)}") // 10154062
+    println("Solution for task 2 example: ${solveDay11(inputExample, 10)}") // 1030
+    println("Solution for task 2 example: ${solveDay11(inputExample, 100)}") // 8410
+    println("Solution for task 2 task:    ${solveDay11(inputTask, 1000000)}") // 553083047914
 }
 
