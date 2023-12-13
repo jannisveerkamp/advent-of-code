@@ -43,20 +43,14 @@ private fun solveDay13b(input: String): Int {
     var counter = 0
     mirrors.forEach { mirror ->
         val transposed = mirror.transposed()
+        val baseRow = findReflection(mirror, 100).first
+        val baseColumn = findReflection(transposed, 1).first
         val size = mirror.size * mirror.first().length
 
-        // Rows
-        val baseRow = findReflection(mirror, 100).first
         counter += (0 until size).sumOf { index ->
             val row = findReflection(mirror.replaceChar(index), 100, baseRow)
-            row.second
-        }
-
-        // Columns
-        val baseColumn = findReflection(transposed, 1).first
-        counter += (0 until size).sumOf { index ->
             val column = findReflection(transposed.replaceChar(index), 1, baseColumn)
-            column.second
+            row.second + column.second
         }
     }
     return counter / 2
