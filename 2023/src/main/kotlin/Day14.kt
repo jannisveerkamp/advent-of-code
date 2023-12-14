@@ -1,30 +1,38 @@
+import common.Direction
+
 private const val ROCK_CUBE = '#'
 private const val ROCK_ROUND = 'O'
 private const val EMPTY = '.'
 
 private fun solveDay13a(input: String): Int {
-    val grid = input.split("\n").map { line ->
-        line.toCharArray().toTypedArray()
-    }.toTypedArray()
+    val grid = input.split("\n").map { line -> line.toCharArray() }
 
-    var counter = 0
-    grid.forEachIndexed { y, line ->
-        line.forEachIndexed { x, char ->
-            if (char == ROCK_ROUND) {
-                var currentY = y - 1
-                var currentCounter = 0
-                while (currentY >= 0 && grid[currentY][x] != ROCK_CUBE) {
-                    if (grid[currentY][x] == EMPTY) {
-                        currentCounter++
-                    }
-                    currentY--
-                }
-                counter += grid.size - y + currentCounter
+    return moveUp(grid).withIndex().sumOf { (i, row) ->
+        row.count { it == ROCK_ROUND } * (grid.size - i)
+    }
+}
+
+private fun Direction.next(): Direction = when (this) {
+    Direction.N -> Direction.W
+    Direction.S -> Direction.E
+    Direction.W -> Direction.S
+    Direction.E -> Direction.N
+}
+
+private fun moveUp(input: List<CharArray>): List<CharArray> {
+    val new = Array(input.size) { CharArray(input.first().size) { '.' } }
+    for (j in 0 until input.first().size) {
+        var index = 0
+        for (i in input.indices) {
+            if (input[i][j] == ROCK_ROUND) {
+                new[index++][j] = ROCK_ROUND
+            } else if (input[i][j] == ROCK_CUBE) {
+                new[i][j] = ROCK_CUBE
+                index = i + 1
             }
         }
     }
-
-    return counter
+    return new.toList()
 }
 
 private fun solveDay13b(input: String): Int {
