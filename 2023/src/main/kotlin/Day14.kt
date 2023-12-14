@@ -29,6 +29,12 @@ private fun Array<CharArray>.moveUp(): Array<CharArray> {
     return new
 }
 
+private fun runCycle(currentGrid: Array<CharArray>): Array<CharArray> = currentGrid
+    .moveUp().rotate90Clockwise()
+    .moveUp().rotate90Clockwise()
+    .moveUp().rotate90Clockwise()
+    .moveUp().rotate90Clockwise()
+
 private fun solveDay13b(input: String): Int {
     val grid = input.split("\n").map { line -> line.toCharArray() }.toTypedArray()
 
@@ -39,30 +45,21 @@ private fun solveDay13b(input: String): Int {
 
     while (cycle < maxCycles) {
         cycle++
-        currentGrid = currentGrid
-            .moveUp().rotate90Clockwise()
-            .moveUp().rotate90Clockwise()
-            .moveUp().rotate90Clockwise()
-            .moveUp().rotate90Clockwise()
+        currentGrid = runCycle(currentGrid)
+        val pattern = currentGrid.map { it.concatToString() }
 
-        val xy = currentGrid.map { it.concatToString() }
-        if (knownPatterns.contains(xy)) {
-            val remainingCycles = (maxCycles - cycle) % (cycle - knownPatterns[xy]!!)
+        if (knownPatterns.contains(pattern)) {
+            val remainingCycles = (maxCycles - cycle) % (cycle - knownPatterns[pattern]!!)
             for (i in 0 until remainingCycles) {
-                currentGrid = currentGrid
-                    .moveUp().rotate90Clockwise()
-                    .moveUp().rotate90Clockwise()
-                    .moveUp().rotate90Clockwise()
-                    .moveUp().rotate90Clockwise()
+                currentGrid = runCycle(currentGrid)
             }
             return currentGrid.totalLoad()
         } else {
-            knownPatterns += xy to cycle
+            knownPatterns += pattern to cycle
         }
     }
     return 0
 }
-
 
 fun main() {
     val inputExample = readFile("day14_example.txt")

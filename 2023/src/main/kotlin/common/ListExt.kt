@@ -1,18 +1,14 @@
 package common
 
-fun <T> List<List<T>>.transpose(): List<List<T>> {
-    val result = (first().indices).map { mutableListOf<T>() }.toMutableList()
-    forEach { list -> result.zip(list).forEach { it.first.add(it.second) } }
-    return result
+fun <T> List<List<T>>.transpose(): List<List<T>> = List(first().size) { j ->
+    List(size) { i ->
+        get(i)[j]
+    }
 }
 
-fun Array<CharArray>.transpose(): Array<CharArray> {
-    val cols = first().size
-    val rows = size
-    return Array(cols) { j ->
-        CharArray(rows) { i ->
-            get(i)[j]
-        }
+fun Array<CharArray>.transpose(): Array<CharArray> = Array(first().size) { j ->
+    CharArray(size) { i ->
+        get(i)[j]
     }
 }
 
