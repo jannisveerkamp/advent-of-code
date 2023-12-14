@@ -40,17 +40,17 @@ private fun solveDay13b(input: String): Int {
 
     var currentGrid = grid
     var cycle = 0
-    val knownPatterns: MutableMap<List<String>, Int> = mutableMapOf()
+    val knownPatterns: MutableMap<String, Int> = mutableMapOf()
     val maxCycles = 1_000_000_000
 
     while (cycle < maxCycles) {
         cycle++
         currentGrid = runCycle(currentGrid)
-        val pattern = currentGrid.map { it.concatToString() }
 
+        val pattern = currentGrid.joinToString("") { it.concatToString() }
         if (knownPatterns.contains(pattern)) {
             val remainingCycles = (maxCycles - cycle) % (cycle - knownPatterns[pattern]!!)
-            for (i in 0 until remainingCycles) {
+            repeat(remainingCycles) {
                 currentGrid = runCycle(currentGrid)
             }
             return currentGrid.totalLoad()
