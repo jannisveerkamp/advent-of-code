@@ -1,4 +1,5 @@
 private fun solveDay13a(input: String): Int {
+    return 0
 }
 
 private fun solveDay13b(input: String): Int {
