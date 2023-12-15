@@ -1,10 +1,4 @@
-private fun String.customHash(): Int {
-    var sum = 0
-    forEach { char ->
-        sum = (sum + char.code) * 17 % 256
-    }
-    return sum
-}
+private fun String.customHash(): Int = fold(0) { acc, char -> (acc + char.code) * 17 % 256 }
 
 private fun solveDay15a(input: String): Int = input.split(",").sumOf { step -> step.customHash() }
 
@@ -12,7 +6,7 @@ private sealed interface LenseOperation {
     val value: String
 
     data class Assign(override val value: String, val number: Int) : LenseOperation
-    data class Dash(override val value: String) : LenseOperation
+    data class Remove(override val value: String) : LenseOperation
 }
 
 private fun solveDay15b(input: String): Int {
@@ -22,31 +16,25 @@ private fun solveDay15b(input: String): Int {
             val (first, second) = operation.split("=")
             LenseOperation.Assign(first, second.toInt())
         } else {
-            LenseOperation.Dash(operation.removeSuffix("-"))
+            LenseOperation.Remove(operation.removeSuffix("-"))
         }
     }
 
     operations.forEach { operation ->
-        val hash = operation.value.customHash()
-        val box = boxes[hash]
+        val box = boxes[operation.value.customHash()]
         when (operation) {
-            is LenseOperation.Assign -> {
-                if (box.find { it.value == operation.value } != null) {
-                    box.replaceAll { if (it.value == operation.value) operation else it }
-                } else {
-                    box.add(operation)
-                }
-            }
-
-            is LenseOperation.Dash -> {
-                box.removeIf { it.value == operation.value }
+            is LenseOperation.Remove -> box.removeIf { it.value == operation.value }
+            is LenseOperation.Assign -> if (box.any { it.value == operation.value }) {
+                box.replaceAll { if (it.value == operation.value) operation else it }
+            } else {
+                box.add(operation)
             }
         }
     }
 
-    return boxes.withIndex().sumOf { (indexBox, box) ->
-        box.withIndex().sumOf { (indexLense, lense) ->
-            (indexBox + 1) * (indexLense + 1) * lense.number
+    return boxes.withIndex().sumOf { (boxIndex, box) ->
+        box.withIndex().sumOf { (lenseIndex, lense) ->
+            (boxIndex + 1) * (lenseIndex + 1) * lense.number
         }
     }
 }
