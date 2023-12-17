@@ -12,4 +12,18 @@ enum class Direction {
         W -> Point(-1, 0)
         E -> Point(1, 0)
     }
+
+    fun turnRight(): Direction = when(this) {
+        N -> E
+        S -> W
+        W -> N
+        E -> S
+    }
+
+    fun turnLeft(): Direction = when(this) {
+        N -> W
+        S -> E
+        W -> S
+        E -> N
+    }
 }
