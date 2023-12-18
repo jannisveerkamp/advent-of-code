@@ -23,8 +23,19 @@ private fun solveDay18a(input: String): Long {
     return lavaArea(directions)
 }
 
-private fun solveDay18b(input: String): Int {
-    return 0
+private fun solveDay18b(input: String): Long {
+    val directions = input.split("\n").map { line ->
+        val (_, _, colorString) = line.split(" ")
+        val color = colorString.removePrefix("(#").removeSuffix(")")
+        when (color.last()) {
+            '0' -> Direction.E
+            '1' -> Direction.S
+            '2' -> Direction.W
+            '3' -> Direction.N
+            else -> error("Unknown direction: ${color.last()}")
+        } to color.dropLast(1).toInt(radix = 16)
+    }
+    return lavaArea(directions)
 }
 
 fun main() {
@@ -33,7 +44,7 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay18a(inputExample)}") // 62
     println("Solution for task 1 task:    ${solveDay18a(inputTask)}") // 53300
-//    println("Solution for task 2 example: ${solveDay18b(inputExample)}") // ???
-//    println("Solution for task 2 task:    ${solveDay18b(inputTask)}") // ???
+    println("Solution for task 2 example: ${solveDay18b(inputExample)}") // 952408144115
+    println("Solution for task 2 task:    ${solveDay18b(inputTask)}") // 64294334780659
 }
 
