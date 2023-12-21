@@ -1,105 +1,96 @@
-import common.DijkstraNode
-import common.GenericNodeWithCost
-import java.util.*
-import kotlin.Comparator
-
-interface ExactDijkstra<Node : DijkstraNode<Node>> {
-
-    fun solve(start: Node, end: Node? = null, comparator: Comparator<Node>? = null): MutableMap<Node, List<Int>> {
-        val toVisit = PriorityQueue<GenericNodeWithCost<Node>>()
-        toVisit.add(start.withCost(minCost()))
-        val visited = mutableSetOf<Pair<Node, Int>>()
-        val currentCosts = mutableMapOf<Node, List<Int>>().withDefault { listOf(maxCost()) }
-        currentCosts[start] = listOf(minCost())
-
-        while (toVisit.isNotEmpty()) {
-            val current: GenericNodeWithCost<Node> = toVisit.poll().also { visited.add(it.node() to it.cost) }
-
-            val foundEnd: Boolean? = end?.let { node: Node ->
-                comparator?.let { it.compare(current.node(), end) == 0 } ?: (current.node() == node)
-            }
-
-            if (foundEnd == true) {
-                return currentCosts
-            }
-
-            current.neighbors().forEach { neighbor ->
-                val newCost = current.cost() + neighbor.cost()
-                if (!visited.contains(neighbor.node() to newCost)) {
-                    if (!currentCosts.getValue(neighbor.node()).contains(newCost) && newCost <= maxCost()) {
-                        currentCosts[neighbor.node()] = (currentCosts[neighbor.node()] ?: emptyList()) + newCost
-                        toVisit.add(neighbor.node().withCost(newCost))
-                    }
-                }
-            }
-        }
-
-        return currentCosts
-    }
-
-    fun Node.withCost(cost: Int): GenericNodeWithCost<Node> = GenericNodeWithCost(this, cost)
-    fun minCost(): Int = 0
-    fun maxCost(): Int = Int.MAX_VALUE
-}
-
+import common.Direction
+import common.Point
 
 private data class Garden(
     val x: Int,
     val y: Int,
     val tile: Char
-) : DijkstraNode<Garden> {
+)
 
-    private lateinit var blocks: List<List<Garden>>
-
-    override fun neighbors(): Map<Garden, Int> {
-        val u = if (y - 1 >= 0) blocks[y - 1][x] else null
-        val d = if (y + 1 < blocks.size) blocks[y + 1][x] else null
-        val l = if (x - 1 >= 0) blocks[y][x - 1] else null
-        val r = if (x + 1 < blocks[y].size) blocks[y][x + 1] else null
-        return listOfNotNull(u, d, l, r).filter { it.tile != '#' }.associateWith { 1 }
-    }
-
-    fun withBlocks(blocks: MutableList<MutableList<Garden>>) = apply { this.blocks = blocks }
-}
-
-private fun solveDay21a(input: String, steps: Int): Int {
-    val garden: MutableList<MutableList<Garden>> = mutableListOf()
+private fun parseGarden(input: String): Pair<List<List<Garden>>, Garden> {
     lateinit var start: Garden
-    input.split("\n").forEachIndexed { y, line ->
-        val cliffRow = mutableListOf<Garden>()
-        line.forEachIndexed { x, char ->
+    val garden = input.split("\n").mapIndexed { y, line ->
+        line.mapIndexed { x, char ->
             val block = Garden(x, y, char)
-            block.withBlocks(garden)
             if (block.tile == 'S') start = block
-            cliffRow.add(block)
+            block
         }
-        garden.add(cliffRow)
     }
-    val dijkstra = object : ExactDijkstra<Garden> {
-        override fun maxCost(): Int = steps + 1
-    }
-    val results = dijkstra.solve(start)
-    val filtered = results.filter { it.value.contains(steps) }
-
-    return filtered.size
+    return garden to start
 }
 
-private fun solveDay21b(input: String, steps: Int): Int {
-    return 0
+private fun solveDay21(input: String, steps: Int): Long {
+    val (garden, start) = parseGarden(input)
+
+    val yMax = garden.size
+    val xMax = garden.first().size
+    val visited = mutableSetOf<Point>()
+    var currentPoints = mutableSetOf(Point(start.x, start.y))
+    val counts = LongArray(2)
+    val borders = IntArray(xMax)
+    val d1 = IntArray(xMax)
+    val d2 = IntArray(xMax)
+    var step = 0
+
+    while (step < steps) {
+        val newPoints = mutableSetOf<Point>()
+        currentPoints.forEach { currentPoint ->
+            Direction.values().map { it.toPoint() }.forEach { direction ->
+                val x = currentPoint.x + direction.x
+                val y = currentPoint.y + direction.y
+                if (garden[y.mod(yMax)][x.mod(xMax)].tile != '#') {
+                    val next = Point(x, y)
+                    if (visited.add(next)) {
+                        newPoints.add(next)
+                    }
+                }
+            }
+        }
+        val borderSize = newPoints.size
+        val old = counts[0]
+        counts[0] = counts[1]
+        counts[1] = borderSize + old
+        val ix = step % xMax
+        if (step >= xMax) {
+            val dx = borderSize - borders[ix]
+            d2[ix] = dx - d1[ix]
+            d1[ix] = dx
+        }
+        borders[ix] = borderSize
+        currentPoints = newPoints
+        step++
+        if (step >= 2 * xMax) {
+            if (d2.all { it == 0 }) {
+                break
+            }
+        }
+    }
+
+    // Extrapolate
+    for (i in step until steps) {
+        val ix = i % xMax
+        d1[ix] += d2[ix]
+        borders[ix] += d1[ix]
+        val old = counts[0]
+        counts[0] = counts[1]
+        counts[1] = borders[ix] + old
+    }
+    return counts[1]
 }
 
 fun main() {
     val inputExample = readFile("day21_example.txt")
     val inputTask = readFile("day21.txt")
 
-    println("Solution for task 1 example: ${solveDay21a(inputExample, 6)}") // 16
-    println("Solution for task 1 example: ${solveDay21b(inputExample, 10 + 2)}") // 50
-    println("Solution for task 1 example: ${solveDay21b(inputExample, 50 + 2)}") // 1594
-    println("Solution for task 1 example: ${solveDay21b(inputExample, 100 + 2)}") // 6536
-    println("Solution for task 1 example: ${solveDay21b(inputExample, 500 + 2)}") // 167004
-    println("Solution for task 1 example: ${solveDay21b(inputExample, 1000 + 2)}") // 668697
-    println("Solution for task 1 example: ${solveDay21b(inputExample, 5000 + 2)}") // 16733044
-    println("Solution for task 1 task:    ${solveDay21a(inputTask, 64)}") // 3830
-//    println("Solution for task 1 task:    ${solveDay21b(inputTask, 26501365+2)}") // ???
+    println("Solution for task 1 example: ${solveDay21(inputExample, 6)}") // 16
+    println("Solution for task 1 task:    ${solveDay21(inputTask, 64)}") // 3830
+
+    println("Solution for task 1 example: ${solveDay21(inputExample, 10)}") // 50
+    println("Solution for task 1 example: ${solveDay21(inputExample, 50)}") // 1594
+    println("Solution for task 1 example: ${solveDay21(inputExample, 100)}") // 6536
+    println("Solution for task 1 example: ${solveDay21(inputExample, 500)}") // 167004
+    println("Solution for task 1 example: ${solveDay21(inputExample, 1000)}") // 668697
+    println("Solution for task 1 example: ${solveDay21(inputExample, 5000)}") // 16733044
+    println("Solution for task 1 task:    ${solveDay21(inputTask, 26501365)}") // 637087163925555
 }
 
