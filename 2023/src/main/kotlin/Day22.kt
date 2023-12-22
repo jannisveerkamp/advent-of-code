@@ -52,8 +52,7 @@ private fun fallDown(bricks: List<Brick>): Pair<List<Brick>, Int> {
 private fun solveDay22a(input: String): Int {
     val bricks = Brick.fromString(input).sortedBy { it.z.first }
 
-    val (fallenBricks, _) = fallDown(bricks)
-
+    val fallenBricks = fallDown(bricks).first
     return fallenBricks.count { brick ->
         val disintegrated = fallenBricks.minus(brick)
         val (newFallenBricks, _) = fallDown(disintegrated)
@@ -64,12 +63,10 @@ private fun solveDay22a(input: String): Int {
 private fun solveDay22b(input: String): Int {
     val bricks = Brick.fromString(input).sortedBy { it.z.first }
 
-    val (fallenBricks, fallen) = fallDown(bricks)
-
+    val fallenBricks = fallDown(bricks).first
     return fallenBricks.sumOf { brick ->
         val disintegrated = fallenBricks.minus(brick)
-        val (_, newFallen) = fallDown(disintegrated)
-        newFallen
+        fallDown(disintegrated).second
     }
 }
 
