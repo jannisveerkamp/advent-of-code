@@ -7,7 +7,7 @@ data class Brick(val x: IntRange, val y: IntRange, val z: IntRange) {
     }
 }
 
-private fun fallDown(bricks: List<Brick>): Pair<List<Brick>, Array<Array<Array<Boolean>>>> {
+private fun fallDown(bricks: List<Brick>): Pair<List<Brick>, Int> {
     val sortedBricks = bricks.sortedBy { it.z.first() }
     val cube = Array(bricks.maxOf { it.x.last() } + 1) {
         Array(bricks.maxOf { it.y.last() } + 1) {
@@ -16,10 +16,10 @@ private fun fallDown(bricks: List<Brick>): Pair<List<Brick>, Array<Array<Array<B
             }
         }
     }
+    var fallen = 0
     val fallenBricks = sortedBricks.map { brick ->
         var zOffset = 0
         while (brick.z.first() + zOffset > 1) {
-//            println("can fall")
             val blockedBelow = brick.x.any { x ->
                 brick.y.any { y ->
                     brick.z.any { z ->
@@ -33,6 +33,9 @@ private fun fallDown(bricks: List<Brick>): Pair<List<Brick>, Array<Array<Array<B
                 zOffset--
             }
         }
+        if (zOffset != 0) {
+            fallen++
+        }
         brick.x.forEach { x ->
             brick.y.forEach { y ->
                 brick.z.forEach { z ->
@@ -42,24 +45,32 @@ private fun fallDown(bricks: List<Brick>): Pair<List<Brick>, Array<Array<Array<B
         }
         brick.copy(z = IntRange(brick.z.first() + zOffset, brick.z.last() + zOffset))
     }
-    return fallenBricks to cube
+    return fallenBricks to fallen
 }
 
 
 private fun solveDay22a(input: String): Int {
     val bricks = Brick.fromString(input).sortedBy { it.z.first }
 
-    val (fallenBricks, cube) = fallDown(bricks)
+    val (fallenBricks, _) = fallDown(bricks)
 
     return fallenBricks.count { brick ->
-        val disintegradted = fallenBricks.minus(brick)
-        val (newFallenBricks, cube) = fallDown(disintegradted)
-        newFallenBricks.minus(disintegradted.toSet()).isEmpty() && disintegradted.minus(newFallenBricks.toSet()).isEmpty()
+        val disintegrated = fallenBricks.minus(brick)
+        val (newFallenBricks, _) = fallDown(disintegrated)
+        newFallenBricks.minus(disintegrated.toSet()).isEmpty() && disintegrated.minus(newFallenBricks.toSet()).isEmpty()
     }
 }
 
 private fun solveDay22b(input: String): Int {
-    return 0
+    val bricks = Brick.fromString(input).sortedBy { it.z.first }
+
+    val (fallenBricks, fallen) = fallDown(bricks)
+
+    return fallenBricks.sumOf { brick ->
+        val disintegrated = fallenBricks.minus(brick)
+        val (_, newFallen) = fallDown(disintegrated)
+        newFallen
+    }
 }
 
 fun main() {
@@ -69,6 +80,6 @@ fun main() {
     println("Solution for task 1 example: ${solveDay22a(inputExample)}") // 5
     println("Solution for task 1 task:    ${solveDay22a(inputTask)}") // 393
     println("Solution for task 1 example: ${solveDay22b(inputExample)}") // 7
-    println("Solution for task 1 task:    ${solveDay22b(inputTask)}") // ???
+    println("Solution for task 1 task:    ${solveDay22b(inputTask)}") // 58440
 }
 
