@@ -10,6 +10,20 @@ private enum class WorkflowComparator(val char: Char) {
         GREATER -> value > otherValue
         SMALLER -> value < otherValue
     }
+
+    fun splitBySuccess(value: Int, range: IntRange): Pair<IntRange?, IntRange?> = when (this) {
+        GREATER -> {
+            val pass = range.indexOf(value + 1)..range.last
+            val fail = range.first..range.indexOf(value)
+            pass.takeUnless(IntRange::isEmpty) to fail.takeUnless(IntRange::isEmpty)
+        }
+
+        SMALLER -> {
+            val pass = range.first..range.indexOf(value + 1)
+            val fail = range.indexOf(value)..range.last
+            pass.takeUnless(IntRange::isEmpty) to fail.takeUnless(IntRange::isEmpty)
+        }
+    }
 }
 
 private data class WorkflowOperation(
@@ -88,7 +102,60 @@ private fun solveDay19a(input: String): Int {
     }
 }
 
-private fun solveDay19b(input: String): Int {
+private fun rec(
+    workflows: List<Workflow>,
+    currentWorkflow: Workflow,
+    xRange: IntRange,
+    mRange: IntRange,
+    aRange: IntRange,
+    sRange: IntRange
+): Int {
+//    var currentXRange = xRange
+//    var currentMRange = mRange
+//    var currentARange = aRange
+//    var currentSRange = sRange
+//
+//    val matchOperation = currentWorkflow.operations.forEach { operation ->
+//        when (operation.comparer) {
+//            'x' -> {
+//                if (xRange.contains(operation.operations)) {
+//                    operation.condition.match(xRange, operation.value)
+//                    rec(x, currentWorkflow.value)
+//                }
+//            }
+//
+//            'm' -> rec(m, currentWorkflow.value)
+//            'a' -> rec(a, currentWorkflow.value)
+//            's' -> rec(s, currentWorkflow.value)
+//            else -> error("Unknown comparer: ${operation.comparer}")
+//        }
+//    }
+//    return matchOperation?.target ?: fallback
+    return 0
+}
+
+private fun solveDay19b(input: String): Long {
+//    val (operationInput, _) = input.split("\n\n")
+//    val operations = operationInput.split("\n").map { line -> Workflow.fromString(line) }
+//    val parts = partInput.split("\n").map { line -> PartsToSort.fromString(line) }
+//
+//    val x = 0..4000
+//    val m = 0..4000
+//    val a = 0..4000
+//    val s = 0..4000
+//
+//    return parts.sumOf { part ->
+//        var currentOperation = operations.first { it.name == "in" }
+//        while (true) {
+//            rec(operations, currentOperation, x, m, a, s)
+//            when (val next = currentOperation.match(part.x, part.m, part.a, part.s)) {
+//                "A" -> return@sumOf part.sum.toLong()
+//                "R" -> return@sumOf 0L
+//                else -> currentOperation = operations.first { it.name == next }
+//            }
+//        }
+//        0L
+//    }
     return 0
 }
 
@@ -99,7 +166,7 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay19a(inputExample)}") // 19114
     println("Solution for task 1 task:    ${solveDay19a(inputTask)}") // 456651
-//    println("Solution for task 2 example: ${solveDay19b(inputExample)}") // ???
-//    println("Solution for task 2 task:    ${solveDay19b(inputTask)}") // ???
+    println("Solution for task 2 example: ${solveDay19b(inputExample)}") // 167409079868000
+    println("Solution for task 2 task:    ${solveDay19b(inputTask)}") // 131899818301477
 }
 
