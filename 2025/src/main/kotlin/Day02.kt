@@ -3,15 +3,13 @@ private fun parseDay02(input: String): List<LongRange> = input.split(",").map {
     first.toLong()..second.toLong()
 }
 
-private fun Long.isInvalid(): Boolean {
-    val string = toString()
-    return string.substring(0, string.length / 2) == string.substring(string.length / 2, string.length)
+private fun String.isInvalid(): Boolean {
+    return substring(0, length / 2) == substring(length / 2, length)
 }
 
-private fun Long.isInvalidB(): Boolean {
-    val string = toString()
-    return (1..(string.length / 2)).any {
-        val list = string.chunked(it)
+private fun String.isInvalidB(): Boolean {
+    return (1..(length / 2)).any {
+        val list = chunked(it)
         val set = list.toSet()
         set.size == 1
     }
@@ -19,13 +17,13 @@ private fun Long.isInvalidB(): Boolean {
 
 private fun solveDay02a(input: String): Long = parseDay02(input).sumOf { range ->
     range.sumOf { current ->
-        current.takeIf { current.isInvalid() } ?: 0
+        current.takeIf { current.toString().isInvalid() } ?: 0
     }
 }
 
 private fun solveDay02b(input: String): Long = parseDay02(input).sumOf { range ->
     range.sumOf { current ->
-        current.takeIf { current.isInvalidB() } ?: 0
+        current.takeIf { current.toString().isInvalidB() } ?: 0
     }
 }
 
