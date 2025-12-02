@@ -3,28 +3,16 @@ private fun parseDay02(input: String): List<LongRange> = input.split(",").map {
     first.toLong()..second.toLong()
 }
 
-private fun String.isInvalid(): Boolean {
-    return substring(0, length / 2) == substring(length / 2, length)
-}
+private fun String.isInvalid(): Boolean = substring(0, length / 2) == substring(length / 2, length)
 
-private fun String.isInvalidB(): Boolean {
-    return (1..(length / 2)).any {
-        val list = chunked(it)
-        val set = list.toSet()
-        set.size == 1
-    }
-}
+private fun String.isInvalidB(): Boolean = (1..(length / 2)).any { chunked(it).toSet().size == 1 }
 
 private fun solveDay02a(input: String): Long = parseDay02(input).sumOf { range ->
-    range.sumOf { current ->
-        current.takeIf { current.toString().isInvalid() } ?: 0
-    }
+    range.sumOf { current -> current.takeIf { current.toString().isInvalid() } ?: 0 }
 }
 
 private fun solveDay02b(input: String): Long = parseDay02(input).sumOf { range ->
-    range.sumOf { current ->
-        current.takeIf { current.toString().isInvalidB() } ?: 0
-    }
+    range.sumOf { current -> current.takeIf { current.toString().isInvalidB() } ?: 0 }
 }
 
 fun main() {
