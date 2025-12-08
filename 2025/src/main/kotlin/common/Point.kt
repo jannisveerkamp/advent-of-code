@@ -1,6 +1,8 @@
 package common
 
 import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 data class Point(val x: Int, val y: Int) {
     fun manhattan(other: Point): Int = abs(other.x - x) + abs(other.y - y)
@@ -21,6 +23,9 @@ data class PointL(val x: Long, val y: Long) {
 
 data class Point3(val x: Int, val y: Int, val z: Int) {
     fun manhattan(other: Point3): Int = abs(other.x - x) + abs(other.y - y) + abs(other.z - z)
+    fun euclidean(other: Point3): Double = sqrt(euclideanSquared(other))
+    fun euclideanSquared(other: Point3): Double =
+        (other.x - x).toDouble().pow(2) + (other.y - y).toDouble().pow(2) + (other.z - z).toDouble().pow(2)
 }
 
 fun shoelaceArea(vertices: List<Point>): Long = vertices.indices.sumOf { i ->
