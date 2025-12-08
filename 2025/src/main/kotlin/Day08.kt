@@ -1,9 +1,12 @@
 import common.Point3
 import common.zipWithItselfAllUnique
 
-private fun parseDay08(input: String): List<Point3> = input.split("\n").map { line ->
-    val (x, y, z) = line.split(",").map { it.toInt() }
-    Point3(x, y, z)
+private fun parseDay08(input: String): Pair<List<Point3>, MutableSet<MutableSet<Point3>>> {
+    val boxes = input.split("\n").map { line ->
+        val (x, y, z) = line.split(",").map { it.toInt() }
+        Point3(x, y, z)
+    }
+    return boxes to mutableSetOf<MutableSet<Point3>>(*boxes.map { mutableSetOf(it) }.toTypedArray())
 }
 
 private fun mergeCircuits(circuit: MutableSet<MutableSet<Point3>>, first: Point3, second: Point3): Boolean {
@@ -19,11 +22,8 @@ private fun mergeCircuits(circuit: MutableSet<MutableSet<Point3>>, first: Point3
 }
 
 private fun solveDay08a(input: String, iterations: Int): Int {
-    val points = parseDay08(input)
-    val circuit = mutableSetOf<MutableSet<Point3>>()
-    circuit.addAll(points.map { mutableSetOf(it) })
-
-    points.zipWithItselfAllUnique()
+    val (boxes, circuit) = parseDay08(input)
+    boxes.zipWithItselfAllUnique()
         .sortedBy { it.first.euclideanSquared(it.second) }
         .take(iterations)
         .forEach { currentPoint ->
@@ -34,11 +34,8 @@ private fun solveDay08a(input: String, iterations: Int): Int {
 
 
 private fun solveDay08b(input: String): Int {
-    val points = parseDay08(input)
-    val circuit = mutableSetOf<MutableSet<Point3>>()
-    circuit.addAll(points.map { mutableSetOf(it) })
-
-    points.zipWithItselfAllUnique()
+    val (boxes, circuit) = parseDay08(input)
+    boxes.zipWithItselfAllUnique()
         .sortedBy { it.first.euclideanSquared(it.second) }
         .forEach { currentPoint ->
             mergeCircuits(circuit, currentPoint.first, currentPoint.second)
