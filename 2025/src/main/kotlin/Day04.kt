@@ -48,7 +48,7 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay04a(inputExample)}") // 13
     println("Solution for task 1 task:    ${solveDay04a(inputTask)}") // 1537
-    println("Solution for task 1 example: ${solveDay04b(inputExample)}") // 43
-    println("Solution for task 1 task:    ${solveDay04b(inputTask)}") // 8707
+    println("Solution for task 2 example: ${solveDay04b(inputExample)}") // 43
+    println("Solution for task 2 task:    ${solveDay04b(inputTask)}") // 8707
 }
 

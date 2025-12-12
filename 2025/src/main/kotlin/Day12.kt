@@ -27,17 +27,15 @@ private fun solveDay12a(input: String): Int {
     }
 }
 
-private fun solveDay12b(input: String): Int {
-    return 0
-}
+private fun solveDay12b(): String = "No second part :("
 
 fun main() {
     val inputExample = readFile("day12_example.txt")
-    val inputTask = readFile("day12.txt")
+    val inputTask = readFile(filename = "day12.txt")
 
     println("Solution for task 1 example: ${solveDay12a(inputExample)}") // 2? 3?
     println("Solution for task 1 task:    ${solveDay12a(inputTask)}") // 499
-    println("Solution for task 1 example: ${solveDay12b(inputExample)}") // ???
-    println("Solution for task 1 task:    ${solveDay12b(inputTask)}") // ???
+    println("Solution for task 2 example: ${solveDay12b()}")
+    println("Solution for task 2 task:    ${solveDay12b()}")
 }
 

@@ -5,7 +5,7 @@ private const val EMPTY = '.'
 private const val SPLITTER = '^'
 private const val BEAM = '|'
 
-private fun parseDay07(input: String): List<MutableList<Char>> = input.split("\n").map { it.toMutableList() }
+private fun parseDay07(input: String): List<MutableList<Char>> = input.lines().map { it.toMutableList() }
 
 private fun solveDay07a(input: String): Int {
     val tree = parseDay07(input)
@@ -59,7 +59,7 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay07a(inputExample)}") // 21
     println("Solution for task 1 task:    ${solveDay07a(inputTask)}") // 1613
-    println("Solution for task 1 example: ${solveDay07b(inputExample)}") // 40
-    println("Solution for task 1 task:    ${solveDay07b(inputTask)}") // 48021610271997
+    println("Solution for task 2 example: ${solveDay07b(inputExample)}") // 40
+    println("Solution for task 2 task:    ${solveDay07b(inputTask)}") // 48021610271997
 }
 

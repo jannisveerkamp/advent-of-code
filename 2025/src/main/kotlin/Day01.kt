@@ -2,7 +2,7 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 private fun parseDay01(input: String): List<Int> {
-    return input.split("\n").map { line -> line.replace("L", "-").replace("R", "").toInt() }
+    return input.lines().map { line -> line.replace("L", "-").replace("R", "").toInt() }
 }
 
 private fun solveDay01a(input: String): Int {

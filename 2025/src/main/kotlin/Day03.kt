@@ -1,4 +1,4 @@
-private fun parseDay03(input: String): List<List<Int>> = input.split("\n").map { it.map { it.digitToInt() } }
+private fun parseDay03(input: String): List<List<Int>> = input.lines().map { it.map { it.digitToInt() } }
 
 private fun solveDay03(input: String, digits: Int): Long = parseDay03(input).sumOf { bank ->
     var currentBank = bank.toList()

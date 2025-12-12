@@ -1,12 +1,12 @@
 import kotlin.math.max
-import kotlin.math.min
+import kotlin.text.lines
 
 private fun parseDay05(input: String): Pair<List<LongRange>, List<Long>> {
     val (ranges, ids) = input.split("\n\n")
-    return ranges.split("\n").map { line ->
+    return ranges.lines().map { line ->
         val (start, end) = line.split("-")
         LongRange(start.toLong(), end.toLong())
-    } to ids.split("\n").map { it.toLong() }
+    } to ids.lines().map { it.toLong() }
 }
 
 private fun LongRange.intersects(other: LongRange): Boolean = last >= other.start && other.last >= start
@@ -42,6 +42,6 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay05a(inputExample)}") // 3
     println("Solution for task 1 task:    ${solveDay05a(inputTask)}") // 607
-    println("Solution for task 1 example: ${solveDay05b(inputExample)}") // 14
-    println("Solution for task 1 task:    ${solveDay05b(inputTask)}") // 342433357244012
+    println("Solution for task 2 example: ${solveDay05b(inputExample)}") // 14
+    println("Solution for task 2 task:    ${solveDay05b(inputTask)}") // 342433357244012
 }

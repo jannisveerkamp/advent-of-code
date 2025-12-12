@@ -2,7 +2,7 @@ import common.Point3
 import common.zipWithItselfAllUnique
 
 private fun parseDay08(input: String): Pair<List<Point3>, MutableSet<MutableSet<Point3>>> {
-    val boxes = input.split("\n").map { line ->
+    val boxes = input.lines().map { line ->
         val (x, y, z) = line.split(",").map { it.toInt() }
         Point3(x, y, z)
     }
@@ -52,7 +52,7 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay08a(inputExample, 10)}") // 40
     println("Solution for task 1 task:    ${solveDay08a(inputTask, 1000)}") // 68112
-    println("Solution for task 1 example: ${solveDay08b(inputExample)}") // 25272
-    println("Solution for task 1 task:    ${solveDay08b(inputTask)}") // 44543856
+    println("Solution for task 2 example: ${solveDay08b(inputExample)}") // 25272
+    println("Solution for task 2 task:    ${solveDay08b(inputTask)}") // 44543856
 }
 

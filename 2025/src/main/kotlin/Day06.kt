@@ -1,7 +1,7 @@
 private data class Day06Operation(val numbers: List<Long>, val isMult: Boolean)
 
 private fun parseDay06(input: String): List<Day06Operation> {
-    val rows = input.split("\n").map { it.trim().split("\\s+".toRegex()) }
+    val rows = input.lines().map { it.trim().split("\\s+".toRegex()) }
 
     var operations = mutableListOf<Day06Operation>()
     (0..rows.first().lastIndex).forEach { i ->
@@ -81,7 +81,7 @@ fun main() {
 
     println("Solution for task 1 example: ${solveDay06a(inputExample)}") // 4277556
     println("Solution for task 1 task:    ${solveDay06a(inputTask)}") // 6635273135233
-    println("Solution for task 1 example: ${solveDay06b(inputExample)}") // 3263827
-    println("Solution for task 1 task:    ${solveDay06b(inputTask)}") // 12542543681221
+    println("Solution for task 2 example: ${solveDay06b(inputExample)}") // 3263827
+    println("Solution for task 2 task:    ${solveDay06b(inputTask)}") // 12542543681221
 }
 
